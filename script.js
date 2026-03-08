@@ -2,9 +2,11 @@
 const menuToggle = document.getElementById('menuToggle');
 const navMenu = document.getElementById('navMenu');
 
-menuToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-});
+if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+    });
+}
 
 // Smooth Scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -91,29 +93,30 @@ const searchBtn = document.getElementById('searchBtn');
 const searchInput = document.getElementById('searchInput');
 const citySelect = document.getElementById('citySelect');
 
-searchBtn.addEventListener('click', () => {
-    const query = searchInput.value.trim();
-    const city = citySelect.value;
-    
-    if (query) {
-        console.log(`Searching for: ${query} in ${city}`);
-        // Add your search logic here
-        alert(`Searching for "${query}" in ${city}`);
-    } else {
-        searchInput.focus();
-        searchInput.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.2)';
-        setTimeout(() => {
-            searchInput.style.boxShadow = '';
-        }, 1000);
-    }
-});
+if (searchBtn && searchInput && citySelect) {
+    searchBtn.addEventListener('click', () => {
+        const query = searchInput.value.trim();
+        const city = citySelect.value;
+        
+        if (query) {
+            console.log(`Searching for: ${query} in ${city}`);
+            alert(`Searching for "${query}" in ${city}`);
+        } else {
+            searchInput.focus();
+            searchInput.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.2)';
+            setTimeout(() => {
+                searchInput.style.boxShadow = '';
+            }, 1000);
+        }
+    });
 
-// Enter key for search
-searchInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        searchBtn.click();
-    }
-});
+    // Enter key for search
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            searchBtn.click();
+        }
+    });
+}
 
 // Active Navigation Link on Scroll
 const sections = document.querySelectorAll('section[id]');
