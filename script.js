@@ -81,12 +81,15 @@ const scrollObserver = new IntersectionObserver((entries) => {
 });
 
 // Observe category and city cards
-document.querySelectorAll('.category-card, .city-card').forEach(card => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(30px)';
-    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    scrollObserver.observe(card);
-});
+const cardsToObserve = document.querySelectorAll('.category-card, .city-card');
+if (cardsToObserve.length > 0) {
+    cardsToObserve.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        scrollObserver.observe(card);
+    });
+}
 
 // Search Functionality
 const searchBtn = document.getElementById('searchBtn');
@@ -143,20 +146,25 @@ window.addEventListener('scroll', () => {
 
 // Header Shadow on Scroll
 const header = document.querySelector('.header');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        header.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.1)';
-    } else {
-        header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.03)';
-    }
-});
+if (header) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.1)';
+        } else {
+            header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.03)';
+        }
+    });
+}
 
 // Card Hover Effect Enhancement
-document.querySelectorAll('.category-card, .city-card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+const cards = document.querySelectorAll('.category-card, .city-card');
+if (cards.length > 0) {
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
     });
-});
+}
 
 // Lazy Loading for Images (if you add images later)
 if ('IntersectionObserver' in window) {
@@ -185,11 +193,13 @@ document.querySelectorAll('a[href="#"]').forEach(link => {
 
 // Add loading animation
 window.addEventListener('load', () => {
-    document.body.style.opacity = '0';
-    setTimeout(() => {
-        document.body.style.transition = 'opacity 0.5s ease';
-        document.body.style.opacity = '1';
-    }, 100);
+    if (document.body) {
+        document.body.style.opacity = '0';
+        setTimeout(() => {
+            document.body.style.transition = 'opacity 0.5s ease';
+            document.body.style.opacity = '1';
+        }, 100);
+    }
 });
 
 // Console message
