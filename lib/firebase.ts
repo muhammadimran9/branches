@@ -1,6 +1,6 @@
-import { initializeApp, getApps, getApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
-import { getStorage } from 'firebase/storage'
+import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app'
+import { getFirestore, type Firestore } from 'firebase/firestore'
+import { getStorage, type FirebaseStorage } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyC1dRJtLFMhBqieIj6JrtZsd4j0jd1xM_Y',
@@ -11,8 +11,16 @@ const firebaseConfig = {
   appId: '1:817543103901:web:0f1de5eacc949505dc9b74',
 }
 
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig)
+// Initialize Firebase app
+let app: FirebaseApp
+if (getApps().length === 0) {
+  app = initializeApp(firebaseConfig)
+} else {
+  app = getApp()
+}
 
-export const db = getFirestore(app)
-export const storage = getStorage(app)
+// Initialize Firebase services
+export const db: Firestore = getFirestore(app)
+export const storage: FirebaseStorage = getStorage(app)
+
 export default app
