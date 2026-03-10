@@ -23,4 +23,11 @@ if (getApps().length === 0) {
 export const db: Firestore = getFirestore(app)
 export const storage: FirebaseStorage = getStorage(app)
 
+// Storage configuration
+export const STORAGE_CONFIG = {
+  maxFileSize: 200 * 1024, // 200KB
+  allowedTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'],
+  uploadPath: 'logos'
+}
+
 export default app
