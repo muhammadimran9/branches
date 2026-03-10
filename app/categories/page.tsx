@@ -1,26 +1,88 @@
 'use client'
 
-import { useState, useMemo, Suspense } from 'react'
+import { useState, useMemo, Suspense, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Search, MapPin, SlidersHorizontal, ArrowRight } from 'lucide-react'
+import { Search, MapPin, SlidersHorizontal, ArrowRight, Building2 } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { CATEGORIES, CITIES } from '@/lib/data'
+import { db } from '@/lib/firebase'
+import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore'
+
+interface Business {
+  id: string
+  businessName: string
+  category: string
+  city: string
+  logoUrl?: string
+  description: string
+  phone: string
+  address: string
+}
 
 function CategoriesContent() {
   const searchParams = useSearchParams()
-  const [query, setQuery] = useState(searchParams.get('q') || '')
+  const [queryText, setQueryText] = useState(searchParams.get('q') || '')
   const [city, setCity] = useState(searchParams.get('city') || '')
   const [selectedCat, setSelectedCat] = useState(searchParams.get('cat') || '')
+  const [businesses, setBusinesses] = useState<Business[]>([])
+  const [loading, setLoading] = useState(false)
 
   const filtered = useMemo(() => {
     return CATEGORIES.filter((cat) => {
       if (selectedCat && cat.id !== selectedCat) return false
-      if (query && !cat.name.toLowerCase().includes(query.toLowerCase())) return false
+      if (queryText && !cat.name.toLowerCase().includes(queryText.toLowerCase())) return false
       return true
     })
-  }, [query, selectedCat])
+  }, [queryText, selectedCat])
+
+  // Fetch businesses from Firebase
+  useEffect(() => {
+    async function fetchBusinesses() {
+      if (!selectedCat) {
+        setBusinesses([])
+        return
+      }
+      
+      setLoading(true)
+      try {
+        let q = query(
+          collection(db, 'businesses'),
+          where('category', '==', selectedCat),
+          where('status', '==', 'approved'),
+          orderBy('createdAt', 'desc'),
+          limit(20)
+        )
+        
+        if (city) {
+          q = query(
+            collection(db, 'businesses'),
+            where('category', '==', selectedCat),
+            where('city', '==', city),
+            where('status', '==', 'approved'),
+            orderBy('createdAt', 'desc'),
+            limit(20)
+          )
+        }
+        
+        const snapshot = await getDocs(q)
+        const businessList = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Business[]
+        
+        setBusinesses(businessList)
+      } catch (error) {
+        console.error('Error fetching businesses:', error)
+        setBusinesses([])
+      } finally {
+        setLoading(false)
+      }
+    }
+    
+    fetchBusinesses()
+  }, [selectedCat, city])
 
   return (
     <main>
@@ -40,8 +102,8 @@ function CategoriesContent() {
               <Search className="w-4 h-4 text-gray-400 shrink-0" aria-hidden="true" />
               <input
                 type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                value={queryText}
+                onChange={(e) => setQueryText(e.target.value)}
                 placeholder="Search categories..."
                 className="flex-1 text-sm text-gray-700 placeholder-gray-400 bg-transparent outline-none"
                 aria-label="Search categories"
@@ -79,48 +141,123 @@ function CategoriesContent() {
         </div>
       </section>
 
-      {/* Categories Grid */}
+      {/* Categories Grid or Business Listings */}
       <section className="py-14 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {filtered.length === 0 ? (
-            <div className="text-center py-20 text-gray-400">
-              <p className="text-xl font-semibold">No categories found</p>
-              <p className="mt-2 text-sm">Try a different search term</p>
+          {selectedCat ? (
+            // Show businesses for selected category
+            <div>
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-2xl font-bold text-[#0f2b3d]">
+                  {CATEGORIES.find(c => c.id === selectedCat)?.name} Businesses
+                  {city && ` in ${city}`}
+                </h2>
+                <button
+                  onClick={() => setSelectedCat('')}
+                  className="text-[#60a5fa] hover:text-blue-600 text-sm font-medium"
+                >
+                  ← Back to Categories
+                </button>
+              </div>
+              
+              {loading ? (
+                <div className="text-center py-20">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#60a5fa] mx-auto"></div>
+                  <p className="mt-4 text-gray-500">Loading businesses...</p>
+                </div>
+              ) : businesses.length === 0 ? (
+                <div className="text-center py-20 text-gray-400">
+                  <Building2 className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+                  <p className="text-xl font-semibold">No businesses found</p>
+                  <p className="mt-2 text-sm">Be the first to list your business in this category!</p>
+                  <Link
+                    href="/add-business"
+                    className="mt-4 inline-flex items-center gap-2 px-6 py-3 bg-[#60a5fa] text-white rounded-xl font-semibold text-sm hover:bg-blue-400 transition-colors"
+                  >
+                    Add Your Business
+                  </Link>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {businesses.map((business) => (
+                    <Link
+                      key={business.id}
+                      href={`/business/${business.id}`}
+                      className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-200"
+                    >
+                      <div className="flex items-start gap-4">
+                        {business.logoUrl ? (
+                          <img
+                            src={business.logoUrl}
+                            alt={`${business.businessName} logo`}
+                            className="w-16 h-16 rounded-xl object-cover border border-gray-100"
+                          />
+                        ) : (
+                          <div className="w-16 h-16 rounded-xl bg-gray-100 flex items-center justify-center">
+                            <Building2 className="w-8 h-8 text-gray-400" />
+                          </div>
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-semibold text-[#0f2b3d] text-lg group-hover:text-[#60a5fa] transition-colors">
+                            {business.businessName}
+                          </h3>
+                          <p className="text-sm text-gray-500 mt-1">
+                            {business.city} • {business.phone}
+                          </p>
+                          <p className="text-sm text-gray-600 mt-2 line-clamp-2">
+                            {business.description}
+                          </p>
+                          <div className="mt-3 flex items-center gap-1 text-[#60a5fa] text-sm font-medium">
+                            View Details <ArrowRight className="w-4 h-4" />
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((cat) => (
-                <Link
-                  key={cat.id}
-                  href={`/categories?cat=${cat.id}${city ? `&city=${city}` : ''}`}
-                  className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover flex items-center gap-5"
-                  onClick={() => setSelectedCat(cat.id)}
-                >
-                  <div
-                    className="w-16 h-16 rounded-xl flex items-center justify-center text-3xl shrink-0 transition-transform duration-200 group-hover:scale-110"
-                    style={{ backgroundColor: cat.color + '1a' }}
-                    aria-hidden="true"
+            // Show category grid
+            filtered.length === 0 ? (
+              <div className="text-center py-20 text-gray-400">
+                <p className="text-xl font-semibold">No categories found</p>
+                <p className="mt-2 text-sm">Try a different search term</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filtered.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedCat(cat.id)}
+                    className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover flex items-center gap-5 text-left w-full"
                   >
-                    {cat.icon}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h2 className="font-semibold text-[#0f2b3d] text-base">{cat.name}</h2>
-                    <p className="text-sm text-gray-400 mt-0.5">
-                      {cat.count.toLocaleString()} listings
-                      {city ? ` in ${city}` : ' across Pakistan'}
-                    </p>
-                    <div className="mt-2 flex items-center gap-1 text-[#60a5fa] text-xs font-medium">
-                      Browse listings <ArrowRight className="w-3 h-3" />
+                    <div
+                      className="w-16 h-16 rounded-xl flex items-center justify-center text-3xl shrink-0 transition-transform duration-200 group-hover:scale-110"
+                      style={{ backgroundColor: cat.color + '1a' }}
+                      aria-hidden="true"
+                    >
+                      {cat.icon}
                     </div>
-                  </div>
-                  <div
-                    className="w-1 self-stretch rounded-full shrink-0"
-                    style={{ backgroundColor: cat.color }}
-                    aria-hidden="true"
-                  />
-                </Link>
-              ))}
-            </div>
+                    <div className="flex-1 min-w-0">
+                      <h2 className="font-semibold text-[#0f2b3d] text-base">{cat.name}</h2>
+                      <p className="text-sm text-gray-400 mt-0.5">
+                        {cat.count.toLocaleString()} listings
+                        {city ? ` in ${city}` : ' across Pakistan'}
+                      </p>
+                      <div className="mt-2 flex items-center gap-1 text-[#60a5fa] text-xs font-medium">
+                        Browse listings <ArrowRight className="w-3 h-3" />
+                      </div>
+                    </div>
+                    <div
+                      className="w-1 self-stretch rounded-full shrink-0"
+                      style={{ backgroundColor: cat.color }}
+                      aria-hidden="true"
+                    />
+                  </button>
+                ))}
+              </div>
+            )
           )}
         </div>
       </section>

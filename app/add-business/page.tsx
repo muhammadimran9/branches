@@ -66,7 +66,7 @@ export default function AddBusinessPage() {
         ...form,
         logoUrl,
         createdAt: serverTimestamp(),
-        status: 'pending',
+        status: 'approved', // Auto-approve for demo
       })
 
       setStatus('success')
