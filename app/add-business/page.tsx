@@ -55,27 +55,11 @@ export default function AddBusinessPage() {
     setStatus('loading')
 
     try {
-      let logoUrl = ''
-      
-      // Try to upload logo if provided
-      if (logoFile) {
-        try {
-          const timestamp = Date.now()
-          const fileExtension = logoFile.name.split('.').pop()?.toLowerCase() || 'jpg'
-          const fileName = `${timestamp}.${fileExtension}`
-          
-          const storageRef = ref(storage, `logos/${fileName}`)
-          const metadata = { contentType: logoFile.type || 'image/jpeg' }
-          
-          const snapshot = await uploadBytes(storageRef, logoFile, metadata)
-          logoUrl = await getDownloadURL(snapshot.ref)
-        } catch (uploadError) {
-          console.warn('Logo upload failed, continuing without logo:', uploadError)
-          // Continue without logo instead of failing completely
-        }
-      }
+      // Skip logo upload for now due to CORS issues
+      // TODO: Implement server-side upload via API route
+      const logoUrl = ''
 
-      // Save business data
+      // Save business data without logo
       await addDoc(collection(db, 'businesses'), {
         ...form,
         logoUrl,
