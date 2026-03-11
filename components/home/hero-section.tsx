@@ -85,7 +85,23 @@ export default function HeroSection() {
           </button>
         </form>
 
-        <p className="mt-4 text-white/40 text-sm">
+        {/* Action Buttons */}
+        <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+          <button
+            onClick={() => router.push('/add-business')}
+            className="bg-[#60a5fa] hover:bg-blue-600 text-white font-semibold px-8 py-4 rounded-xl transition-colors duration-200 text-base shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+          >
+            Add Your Business – It's Free
+          </button>
+          <button
+            onClick={() => router.push('/categories')}
+            className="bg-white/10 hover:bg-white/20 text-white font-semibold px-8 py-4 rounded-xl transition-colors duration-200 text-base border border-white/20 backdrop-blur-sm hover:border-white/30"
+          >
+            Browse Businesses
+          </button>
+        </div>
+
+        <p className="mt-6 text-white/40 text-sm">
           Popular: Restaurants, Real Estate, Healthcare, Technology
         </p>
       </div>
