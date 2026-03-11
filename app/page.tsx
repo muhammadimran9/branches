@@ -2,6 +2,7 @@ import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import HeroSection from '@/components/home/hero-section'
 import StatsSection from '@/components/home/stats-section'
+import LatestBusinesses from '@/components/home/latest-businesses'
 import CategoriesGrid from '@/components/home/categories-grid'
 import CitiesGrid from '@/components/home/cities-grid'
 import CTASection from '@/components/home/cta-section'
@@ -13,6 +14,7 @@ export default function HomePage() {
       <main id="main-content">
         <HeroSection />
         <StatsSection />
+        <LatestBusinesses />
         <CategoriesGrid />
         <CitiesGrid />
         <CTASection />

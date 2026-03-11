@@ -1,13 +1,14 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { CheckCircle2, Upload, Loader2, AlertCircle } from 'lucide-react'
+import { CheckCircle2, Upload, Loader2, AlertCircle, Eye } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { CITIES, CATEGORIES } from '@/lib/data'
 import { db, storage } from '@/lib/firebase'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import Link from 'next/link'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
@@ -18,6 +19,7 @@ export default function AddBusinessPage() {
   const [logoFile, setLogoFile] = useState<File | null>(null)
   const [logoPreview, setLogoPreview] = useState<string | null>(null)
   const [logoError, setLogoError] = useState('')
+  const [businessId, setBusinessId] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const [form, setForm] = useState({
@@ -72,8 +74,9 @@ export default function AddBusinessPage() {
         status: 'approved',
       }
 
-      await addDoc(collection(db, 'businesses'), businessData)
+      const docRef = await addDoc(collection(db, 'businesses'), businessData)
       console.log('Business data saved successfully')
+      setBusinessId(docRef.id)
       setStatus('success')
     } catch (err) {
       console.error('Firebase error:', err)
@@ -85,27 +88,41 @@ export default function AddBusinessPage() {
     return (
       <>
         <Navbar />
-        <main className="min-h-[70vh] flex items-center justify-center bg-[#f8fafc] px-4">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-10 max-w-md w-full text-center">
+        <main className="min-h-[70vh] flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50 px-4">
+          <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-10 max-w-md w-full text-center">
             <CheckCircle2 className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
-            <h1 className="text-2xl font-bold text-[#0f2b3d]">Listing Submitted!</h1>
-            <p className="mt-3 text-gray-500 leading-relaxed">
-              Your business listing has been submitted for review. We&apos;ll get it live within 24 hours.
+            <h1 className="text-2xl font-bold text-slate-800 mb-2">Business Added Successfully!</h1>
+            <p className="mt-3 text-slate-600 leading-relaxed mb-6">
+              Your business listing is now live and ready to attract customers.
             </p>
-            <button
-              onClick={() => {
-                setStatus('idle')
-                setForm({
-                  businessName: '', contactPerson: '', email: '', phone: '',
-                  whatsapp: '', city: '', address: '', category: '', description: '',
-                })
-                setLogoFile(null)
-                setLogoPreview(null)
-              }}
-              className="mt-6 px-6 py-3 bg-[#0f2b3d] text-white rounded-xl font-semibold text-sm hover:bg-[#1a3f57] transition-colors"
-            >
-              Add Another Business
-            </button>
+            
+            <div className="space-y-3">
+              {businessId && (
+                <Link
+                  href={`/business/${businessId}`}
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold text-sm hover:bg-blue-700 transition-colors"
+                >
+                  <Eye className="w-4 h-4" />
+                  Live Preview Your Business
+                </Link>
+              )}
+              
+              <button
+                onClick={() => {
+                  setStatus('idle')
+                  setBusinessId(null)
+                  setForm({
+                    businessName: '', contactPerson: '', email: '', phone: '',
+                    whatsapp: '', city: '', address: '', category: '', description: '',
+                  })
+                  setLogoFile(null)
+                  setLogoPreview(null)
+                }}
+                className="w-full px-6 py-3 bg-slate-800 text-white rounded-xl font-semibold text-sm hover:bg-slate-700 transition-colors"
+              >
+                Add Another Business
+              </button>
+            </div>
           </div>
         </main>
         <Footer />
@@ -116,27 +133,27 @@ export default function AddBusinessPage() {
   return (
     <>
       <Navbar />
-      <main className="bg-[#f8fafc] py-14">
+      <main className="bg-gradient-to-br from-slate-50 to-blue-50 py-14">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-10">
-            <h1 className="text-3xl md:text-4xl font-bold text-[#0f2b3d] text-balance">
+            <h1 className="text-3xl md:text-4xl font-bold text-slate-800 text-balance">
               List Your Business – It&apos;s Free
             </h1>
-            <p className="mt-3 text-gray-500 text-lg">
+            <p className="mt-3 text-slate-600 text-lg">
               Reach thousands of customers across Pakistan. Fill out the form below to get started.
             </p>
           </div>
 
           <form
             onSubmit={handleSubmit}
-            className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden"
+            className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden"
             aria-label="Add business listing form"
           >
             {/* Basic Info */}
-            <fieldset className="p-6 md:p-8 border-b border-gray-100">
-              <legend className="text-base font-semibold text-[#0f2b3d] mb-6 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-full bg-[#60a5fa] text-white text-xs flex items-center justify-center font-bold">1</span>
+            <fieldset className="p-6 md:p-8 border-b border-slate-100">
+              <legend className="text-base font-semibold text-slate-800 mb-6 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-full bg-blue-500 text-white text-xs flex items-center justify-center font-bold">1</span>
                 Basic Information
               </legend>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
