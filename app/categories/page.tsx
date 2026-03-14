@@ -8,6 +8,7 @@ import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { CATEGORIES, CITIES } from '@/lib/data'
 import { CATEGORY_ICONS, CATEGORY_GRADIENTS, CATEGORY_BG_COLORS } from '@/lib/categories'
+import { getCategoryIdFromName, isBusinessInCategory } from '@/lib/category-mappings'
 import { db } from '@/lib/firebase'
 import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore'
 
@@ -49,32 +50,44 @@ function CategoriesContent() {
       
       setLoading(true)
       try {
+        // Get the category name from the selected category ID
+        const selectedCategory = CATEGORIES.find(c => c.id === selectedCat)
+        const categoryName = selectedCategory?.name || selectedCat
+        
+        console.log('Fetching businesses for category:', selectedCat, ' categoryName:', categoryName)
+        
         let q = query(
           collection(db, 'businesses'),
-          where('category', '==', selectedCat),
           where('status', '==', 'approved'),
           orderBy('createdAt', 'desc'),
-          limit(20)
+          limit(50) // Increase limit to see more businesses
         )
         
-        if (city) {
-          q = query(
-            collection(db, 'businesses'),
-            where('category', '==', selectedCat),
-            where('city', '==', city),
-            where('status', '==', 'approved'),
-            orderBy('createdAt', 'desc'),
-            limit(20)
-          )
-        }
-        
-        const snapshot = await getDocs(q)
-        const businessList = snapshot.docs.map(doc => ({
+        const querySnapshot = await getDocs(q)
+        const allBusinesses = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         })) as Business[]
         
-        setBusinesses(businessList)
+        console.log('All approved businesses:', allBusinesses.length)
+        console.log('Sample business categories:', allBusinesses.slice(0, 5).map(b => ({ name: b.businessName, category: b.category })))
+        
+        // Filter businesses using the new category mapping system
+        const filteredBusinesses = allBusinesses.filter(business => {
+          return isBusinessInCategory(business.category || '', selectedCat)
+        })
+        
+        console.log('Filtered businesses for category:', filteredBusinesses.length)
+        console.log('Filtered business names:', filteredBusinesses.map(b => b.businessName))
+        
+        // If city is specified, further filter by city
+        const finalBusinesses = city 
+          ? filteredBusinesses.filter(business => business.city?.toLowerCase() === city.toLowerCase())
+          : filteredBusinesses
+        
+        console.log('Final businesses after city filter:', finalBusinesses.length)
+        setBusinesses(finalBusinesses)
+        
       } catch (error) {
         console.error('Error fetching businesses:', error)
         setBusinesses([])
