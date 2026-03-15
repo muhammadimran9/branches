@@ -177,16 +177,20 @@ export default function AddBusinessPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    console.log('Submit button clicked!', { form, status })
     
     if (!validateForm()) {
+      console.log('Form validation failed:', errors)
       return
     }
     
     setStatus('loading')
-
+    console.log('Setting status to loading...')
+    
     try {
-      // Create slug for the business
+      // Create slug for business
       const slug = createSlug(form.businessName, form.city)
+      console.log('Generated slug:', slug)
       
       // For now, skip logo upload to avoid CORS/permissions issues
       // Save business data to Firestore
@@ -211,9 +215,10 @@ export default function AddBusinessPage() {
         createdAt: serverTimestamp(),
         status: 'approved',
       }
-
+      
+      console.log('Saving business data:', businessData)
       const docRef = await addDoc(collection(db, 'businesses'), businessData)
-      console.log('Business data saved successfully')
+      console.log('Business data saved successfully with ID:', docRef.id)
       setBusinessId(docRef.id)
       setStatus('success')
     } catch (err) {
