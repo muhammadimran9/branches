@@ -237,6 +237,16 @@ export default async function CityPage(props: { params: Promise<{ city: string }
               if (line.trim() === '') return <br key={i} />
               return <p key={i} className="text-gray-600 leading-relaxed">{line}</p>
             })}
+
+            {/* Internal Architecture Linking */}
+            <div className="mt-10 pt-8 border-t border-gray-100 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-medium">
+              <span className="text-gray-400">Related:</span>
+              <Link href="/" className="text-[#60a5fa] hover:underline" title="Pakistan Business Directory">Directory Home</Link>
+              <Link href="/categories" className="text-[#60a5fa] hover:underline" title="Browse Categories">Browse All Categories</Link>
+              <Link href="/add-business" className="text-[#60a5fa] hover:underline" title="Add Your Business Free">Add Business Free</Link>
+              <Link href="/blog" className="text-[#60a5fa] hover:underline" title="Business Blog">Business Blog</Link>
+              <Link href="/contact" className="text-[#60a5fa] hover:underline" title="Contact Us">Contact Us</Link>
+            </div>
           </section>
         </div>
       </main>

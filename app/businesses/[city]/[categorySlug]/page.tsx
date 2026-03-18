@@ -234,6 +234,16 @@ export default async function CityCategoryPage(props: { params: Promise<{ city: 
               if (line.trim() === '') return <br key={i} />
               return <p key={i} className="text-gray-600 leading-relaxed mb-2">{line}</p>
             })}
+
+            {/* Internal Architecture Linking */}
+            <div className="mt-10 pt-8 border-t border-gray-100 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-medium">
+              <span className="text-gray-400">Related:</span>
+              <Link href="/" className="text-[#60a5fa] hover:underline" title="Pakistan Business Directory">Directory Home</Link>
+              <Link href={`/cities/${params.city}`} className="text-[#60a5fa] hover:underline" title={`Businesses in ${cityName}`}>All {cityName} Businesses</Link>
+              <Link href={`/category/${params.categorySlug}`} className="text-[#60a5fa] hover:underline" title={`${category.name} in Pakistan`}>All {category.name}</Link>
+              <Link href="/add-business" className="text-[#60a5fa] hover:underline" title="Add Business Free">Add Business Free</Link>
+              <Link href="/blog" className="text-[#60a5fa] hover:underline" title="Business Blog">Business Blog</Link>
+            </div>
           </section>
         </div>
       </main>
