@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { Suspense, useState, useRef } from 'react'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { Upload, X, CheckCircle2, Star, TrendingUp } from 'lucide-react'
 import Navbar from '@/components/navbar'
@@ -9,7 +9,7 @@ import { db } from '@/lib/firebase'
 import { collection, query, where, getDocs, updateDoc, doc, serverTimestamp } from 'firebase/firestore'
 import { sendPriorityConfirmationEmail } from '@/lib/email-service'
 
-export default function PriorityPage() {
+function PriorityPageContent() {
   const params = useParams()
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -350,9 +350,16 @@ export default function PriorityPage() {
               </div>
             </form>
           </div>
-        </main>
-        <Footer />
-      </>
-    )
-  }
+        </div>
+      </main>
+    </>
+  )
+}
+
+export default function PriorityPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-gray-50">Loading priority form...</div>}>
+      <PriorityPageContent />
+    </Suspense>
+  )
 }

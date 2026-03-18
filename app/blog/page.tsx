@@ -1,8 +1,25 @@
+import { Metadata } from 'next'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import Link from 'next/link'
 import { Calendar, ArrowRight, Building2, Clock, User, Star } from 'lucide-react'
 import { BLOG_POSTS, FEATURED_POSTS, RECENT_POSTS } from '@/lib/blog-data'
+
+export const metadata: Metadata = {
+  title: 'Business Growth Blog & Resources | PakBizBranches',
+  description: 'Expert advice, tips, and guides to help your small business grow and succeed in Pakistan. Marketing tips, SEO guides, and local business strategies.',
+  alternates: {
+    canonical: 'https://pakbizbranhces.online/blog',
+  },
+  openGraph: {
+    title: 'Business Growth Blog & Resources | PakBizBranches',
+    description: 'Expert advice, tips, and guides to help your small business grow and succeed in Pakistan.',
+    url: 'https://pakbizbranhces.online/blog',
+    siteName: 'PakBizBranches',
+    locale: 'en_PK',
+    type: 'website',
+  },
+}
 
 export default function BlogPage() {
   return (

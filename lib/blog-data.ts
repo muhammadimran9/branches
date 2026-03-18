@@ -224,14 +224,156 @@ export const BLOG_POSTS = [
     featured: true,
     keywords: ["add business free", "business listing", "free business directory", "PakBizBranches", "online business registration"],
     tags: ["Business Listing", "Free Directory", "Registration Guide", "Pakistan Business"]
+  },
+  {
+    id: 3,
+    title: "Top 10 Business Opportunities in Karachi for 2026",
+    slug: "top-10-business-opportunities-karachi-2026",
+    excerpt: "Discover the most profitable and growing business opportunities in Karachi, Pakistan's commercial hub, for entrepreneurs looking to invest in 2026.",
+    content: `
+      <p class="lead">Karachi, Pakistan's financial capital and largest city, offers a vast landscape of business opportunities for entrepreneurs and investors. With a population of over 20 million and a diverse, fast-growing economy, the city is teeming with sectors ripe for investment in 2026.</p>
+
+      <h2>1. Food Delivery & Ghost Kitchens</h2>
+      <p>The food delivery market in Karachi has exploded in recent years. Ghost kitchens — delivery-only restaurant concepts — offer a low-investment entry point into the food sector. With apps like Foodpanda and Careem Food dominating the market, setting up a ghost kitchen in a strategic location can yield excellent returns.</p>
+
+      <h2>2. E-Commerce & Online Retail</h2>
+      <p>Pakistan's e-commerce sector is growing at over 30% annually. Selling products through platforms like Daraz, or building your own online store targeting Karachi's tech-savvy consumers, is a highly promising opportunity. Niche products — fashion, electronics accessories, and home goods — sell particularly well.</p>
+
+      <h2>3. IT Services & Software Development</h2>
+      <p>Karachi has a growing pool of tech talent, and demand for software development, web design, and IT services continues to surge both locally and internationally. Freelance agencies and small software houses serving international clients can earn in foreign currency, making this sector especially attractive.</p>
+
+      <h2>4. Real Estate & Property Management</h2>
+      <p>Karachi's property market remains resilient despite economic fluctuations. Investment in residential and commercial properties, particularly in growing neighbourhoods like DHA and Bahria Town Karachi, offers long-term capital gains. Property management services are also in high demand as the rental market grows.</p>
+
+      <h2>5. Healthcare Services</h2>
+      <p>Karachi has a large population underserved by quality healthcare, particularly in middle-income areas. Setting up a clinic, pharmacy, diagnostic lab, or home healthcare service in an underserved area can be both socially impactful and profitably rewarding.</p>
+
+      <h2>6. Education & Skill Training</h2>
+      <p>The demand for quality education and vocational training in Karachi is enormous. Institutes offering digital skills — coding, graphic design, digital marketing, and English proficiency — have strong enrolment numbers and can be run on modest budgets.</p>
+
+      <h2>7. Logistics & Courier Services</h2>
+      <p>As e-commerce grows, so does demand for last-mile delivery services in Karachi. Starting a hyper-local courier or logistics business, especially targeting businesses that need same-day or next-day delivery, is a high-growth opportunity.</p>
+
+      <h2>8. Beauty & Wellness Salons</h2>
+      <p>Karachi's beauty industry is booming, with demand for professional salons, spas, and fitness centres growing rapidly, particularly in affluent areas. Specialty services — bridal studios, organic beauty products, and high-end grooming services — command premium pricing.</p>
+
+      <h2>9. Import & Retail of Electronics</h2>
+      <p>With a tech-hungry consumer base, importing and selling mid-range electronics — smartphones, laptops, smart home devices — continues to be a profitable business in Karachi. Online channels combined with a physical shop work best.</p>
+
+      <h2>10. Construction & Interior Design</h2>
+      <p>With thousands of new housing projects and commercial developments underway, construction services and interior design studios are in huge demand. Specialising in modern, affordable interiors for residential properties can set you apart in this competitive market.</p>
+
+      <h2>Get Started Today</h2>
+      <p>Whatever sector you choose, start by listing your business on PakBizBranches to get instant visibility among Karachi's customers. It's free, fast, and effective. <a href="/add-business">Add your business now</a>.</p>
+    `,
+    author: "PakBizBranches Team",
+    date: "March 17, 2026",
+    readTime: "6 min read",
+    category: "Business Growth",
+    featured: false,
+    keywords: ["business opportunities Karachi", "Karachi business ideas 2026", "invest in Karachi", "Karachi startup ideas", "Pakistan business"],
+    tags: ["Karachi", "Business Ideas", "Investment", "Startups", "Pakistan"]
+  },
+  {
+    id: 4,
+    title: "How to Find Reliable Suppliers in Lahore for Your Business",
+    slug: "how-to-find-reliable-suppliers-lahore",
+    excerpt: "Finding trustworthy suppliers in Lahore can make or break your business. Here's a practical guide to sourcing quality products and materials in Pakistan's cultural capital.",
+    content: `
+      <p class="lead">Lahore is Pakistan's second-largest city and a major commercial and manufacturing hub. Whether you are launching a retail store, starting a restaurant, or scaling up a manufacturing operation, finding reliable suppliers in Lahore is a critical step to business success.</p>
+
+      <h2>Why Lahore is a Supplier Hub</h2>
+      <p>Lahore and the broader Punjab province account for a significant share of Pakistan's manufacturing output. The city has well-established wholesale markets for textiles, food, electronics, construction materials, and more. Its proximity to industrial areas like Faisalabad and Gujranwala makes it an ideal sourcing hub.</p>
+
+      <h2>Step 1: Define Your Sourcing Needs</h2>
+      <p>Before reaching out to suppliers, clearly define what you need: product specifications, quantity, quality standards, delivery timelines, and budget. Having a clear brief helps suppliers understand your requirements and provide accurate quotes.</p>
+
+      <h2>Step 2: Visit Lahore's Key Wholesale Markets</h2>
+      <p>Some of Lahore's most important wholesale markets include:</p>
+      <ul>
+        <li><strong>Anarkali Market:</strong> Textiles, fabrics, and garments</li>
+        <li><strong>Hall Road:</strong> Electronics, components, and accessories</li>
+        <li><strong>Akbari Mandi:</strong> Food grains and agricultural produce</li>
+        <li><strong>Liberty Market:</strong> Fashion and consumer goods</li>
+        <li><strong>Brandreth Road:</strong> Hardware and tools</li>
+      </ul>
+
+      <h2>Step 3: Use Online Business Directories</h2>
+      <p>Tools like PakBizBranches allow you to find registered businesses in Lahore by category. You can browse suppliers, read their descriptions, and contact them directly via phone or WhatsApp — saving time and opening up your search beyond geographic limits.</p>
+
+      <h2>Step 4: Verify Supplier Credibility</h2>
+      <p>Before committing to a supplier, verify their credibility by:</p>
+      <ul>
+        <li>Requesting product samples</li>
+        <li>Checking their business registration</li>
+        <li>Speaking to existing customers</li>
+        <li>Making a small initial order to assess quality and reliability</li>
+      </ul>
+
+      <h2>Step 5: Negotiate Terms</h2>
+      <p>Once satisfied with a supplier's quality, negotiate payment terms, minimum order quantities, delivery schedules, and return policies. Building a long-term relationship with reliable suppliers is far more valuable than chasing the lowest price.</p>
+
+      <h2>Start Sourcing on PakBizBranches</h2>
+      <p>Browse our directory of Lahore businesses to find suppliers in your industry. <a href="/cities/lahore">Explore Lahore businesses</a> or search by category to find verified, contact-ready suppliers today.</p>
+    `,
+    author: "PakBizBranches Team",
+    date: "March 17, 2026",
+    readTime: "5 min read",
+    category: "Business Guide",
+    featured: false,
+    keywords: ["suppliers in Lahore", "wholesale market Lahore", "sourcing Pakistan", "business suppliers Lahore", "find suppliers Pakistan"],
+    tags: ["Lahore", "Suppliers", "Wholesale", "Business Guide", "Pakistan"]
+  },
+  {
+    id: 5,
+    title: "Digital Marketing Tips for Pakistani Small Businesses in 2026",
+    slug: "digital-marketing-tips-pakistani-small-businesses",
+    excerpt: "Practical, actionable digital marketing strategies that Pakistani small businesses can use to attract more customers, increase sales, and build brand awareness in 2026.",
+    content: `
+      <p class="lead">Digital marketing has become essential for small businesses across Pakistan. With more consumers turning to smartphones and the internet to find products and services, having a strong digital presence is no longer optional — it's a competitive necessity.</p>
+
+      <h2>1. Get Listed on Business Directories</h2>
+      <p>The first step in any digital marketing strategy is ensuring your business is discoverable. List your business on <a href="/add-business">PakBizBranches</a> — Pakistan's leading free business directory. This gives you an SEO-optimised profile that appears in Google search results when customers look for businesses in your city and category.</p>
+
+      <h2>2. Create a Google Business Profile</h2>
+      <p>A Google Business Profile (formerly Google My Business) is free and puts your business on Google Maps and in local search results. For businesses with physical locations, this is an incredibly powerful tool. Ensure your profile is complete with your address, phone number, opening hours, and photos.</p>
+
+      <h2>3. Leverage WhatsApp Business</h2>
+      <p>Pakistan has one of the highest WhatsApp adoption rates in the world. WhatsApp Business allows you to create a professional profile, set automated responses, and manage customer inquiries efficiently. Many Pakistani businesses close more sales via WhatsApp than any other channel.</p>
+
+      <h2>4. Use Facebook and Instagram</h2>
+      <p>Facebook and Instagram remain the most popular social media platforms in Pakistan. Consistent posting — product photos, customer testimonials, behind-the-scenes content — builds brand awareness. Facebook Groups in your city or industry niche can also drive highly targeted, free traffic.</p>
+
+      <h2>5. Optimise for Local SEO</h2>
+      <p>Local SEO means optimising your online presence so customers in your city find you first. Include your city name in your website title, description, and content. Use terms like "restaurant in Lahore" or "IT company in Karachi" naturally throughout your content and listings.</p>
+
+      <h2>6. Collect Customer Reviews</h2>
+      <p>Online reviews build trust and influence purchasing decisions. Ask satisfied customers to share positive reviews on Google, Facebook, or other platforms. Respond professionally to any negative reviews — this shows potential customers that you care about service quality.</p>
+
+      <h2>7. Run Targeted Facebook Ads</h2>
+      <p>Facebook Ads allows you to target customers in specific Pakistani cities by age, interests, and behaviour. Even small budgets — starting from PKR 500 per day — can deliver meaningful results when ads are well-targeted and creatively designed.</p>
+
+      <h2>8. Create Useful Content</h2>
+      <p>Content marketing — blog posts, how-to videos, tips — positions you as an expert in your field and attracts organic traffic. You don't need expensive production; a simple smartphone video tour of your restaurant or a written guide from your pharmacy can drive significant engagement.</p>
+
+      <h2>Start With Your Business Directory Listing</h2>
+      <p>All of the above efforts compound when you have a strong, verified business listing. <a href="/add-business">List your business on PakBizBranches</a> for free today and start building your digital foundation.</p>
+    `,
+    author: "PakBizBranches Team",
+    date: "March 17, 2026",
+    readTime: "7 min read",
+    category: "Marketing",
+    featured: false,
+    keywords: ["digital marketing Pakistan", "social media marketing Pakistan", "local SEO Pakistan", "small business marketing", "online marketing tips Pakistan"],
+    tags: ["Digital Marketing", "SEO", "Social Media", "Small Business", "Pakistan"]
   }
 ]
 
 // Blog categories
 export const BLOG_CATEGORIES = [
-  { id: "business-growth", name: "Business Growth", count: 1 },
-  { id: "business-guide", name: "Business Guide", count: 1 },
-  { id: "marketing", name: "Marketing", count: 0 },
+  { id: "business-growth", name: "Business Growth", count: 2 },
+  { id: "business-guide", name: "Business Guide", count: 2 },
+  { id: "marketing", name: "Marketing", count: 1 },
   { id: "seo", name: "SEO", count: 0 },
   { id: "local-business", name: "Local Business", count: 0 }
 ]
@@ -241,3 +383,4 @@ export const FEATURED_POSTS = BLOG_POSTS.filter(post => post.featured)
 
 // Recent posts
 export const RECENT_POSTS = BLOG_POSTS.slice(0, 3)
+

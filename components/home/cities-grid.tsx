@@ -35,7 +35,7 @@ export default function CitiesGrid() {
           {featuredCities.map((city) => (
             <Link
               key={city}
-              href={`/categories?city=${city}`}
+              href={`/cities/${city.toLowerCase().replace(/ /g, '-')}`}
               className={`bg-gradient-to-br ${cityImages[city] || 'from-slate-500 to-slate-700'} rounded-xl p-5 text-white text-center card-hover flex flex-col items-center justify-center min-h-[90px]`}
             >
               <span className="font-semibold text-sm">{city}</span>
