@@ -11,8 +11,6 @@ import { CATEGORIES } from '@/lib/data'
 import { db } from '@/lib/firebase'
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore'
 import { sendBusinessSubmissionEmail } from '@/lib/email-service'
-import Link from 'next/link'
-import { sendBusinessSubmissionEmail } from '@/lib/email-service'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
