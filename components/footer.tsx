@@ -114,15 +114,15 @@ export default function Footer() {
           <div className="flex flex-wrap gap-6 text-sm text-white/50 mb-6">
             <span className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-[#60a5fa]" />
-              Office #12, Blue Area, Islamabad, Pakistan
+              Gulghast Colony, Urdu Bazar, Multan, Punjab
             </span>
-            <a href="tel:+92300000000" className="flex items-center gap-2 hover:text-[#60a5fa] transition-colors">
+            <a href="tel:+923345636230" className="flex items-center gap-2 hover:text-[#60a5fa] transition-colors">
               <Phone className="w-4 h-4 text-[#60a5fa]" />
-              +92 300 000 0000
+              +92 334 563 6230
             </a>
-            <a href="mailto:info@pakbizbranhces.online" className="flex items-center gap-2 hover:text-[#60a5fa] transition-colors">
+            <a href="mailto:blogstech213@gmail.com" className="flex items-center gap-2 hover:text-[#60a5fa] transition-colors">
               <Mail className="w-4 h-4 text-[#60a5fa]" />
-              info@pakbizbranhces.online
+              blogstech213@gmail.com
             </a>
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-white/40">

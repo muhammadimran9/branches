@@ -46,21 +46,21 @@ export default function ContactPage() {
                   {
                     Icon: MapPin,
                     label: 'Our Office',
-                    value: 'Office #12, Blue Area, Islamabad, Pakistan',
+                    value: 'Gulghast Colony, Urdu Bazar, Multan, Punjab',
                     color: '#60a5fa',
                   },
                   {
                     Icon: Phone,
                     label: 'Phone',
-                    value: '+92 300 000 0000',
-                    href: 'tel:+92300000000',
+                    value: '+92 334 563 6230',
+                    href: 'tel:+923345636230',
                     color: '#10b981',
                   },
                   {
                     Icon: Mail,
                     label: 'Email',
-                    value: 'info@pakbizbranhces.online',
-                    href: 'mailto:info@pakbizbranhces.online',
+                    value: 'blogstech213@gmail.com',
+                    href: 'mailto:blogstech213@gmail.com',
                     color: '#f59e0b',
                   },
                 ].map(({ Icon, label, value, href, color }) => (
