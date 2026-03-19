@@ -24,6 +24,9 @@ Allow: /blog
 Allow: /about
 Allow: /contact
 Allow: /add-business
+Allow: /developer
+Allow: /categories/restaurants
+Allow: /categories/real-estate
 
 # Sitemap location
 Sitemap: https://pakbizbranhces.online/sitemap.xml

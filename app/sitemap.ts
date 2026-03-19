@@ -16,6 +16,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/add-business`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE_URL}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE_URL}/developer`, lastModified: now, changeFrequency: 'monthly', priority: 0.4 },
+    { url: `${BASE_URL}/categories/restaurants`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
+    { url: `${BASE_URL}/categories/real-estate`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
   ]
 
   // Programmatic city pages
@@ -28,7 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Programmatic category pages
   const categoryPages: MetadataRoute.Sitemap = CATEGORIES.map(cat => ({
-    url: `${BASE_URL}/category/${cat.id}`,
+    url: `${BASE_URL}/categories/${cat.id}`,
     lastModified: now,
     changeFrequency: 'daily' as const,
     priority: 0.85,
@@ -47,14 +50,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Blog post pages
   let blogPages: MetadataRoute.Sitemap = []
   try {
-    const { BLOG_POSTS } = await import('@/lib/blog-data')
-    blogPages = BLOG_POSTS.map(post => ({
-      url: `${BASE_URL}/blog/${post.slug}`,
-      lastModified: new Date(post.date),
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    }))
-  } catch {}
+    // Try to get blog posts from Firebase first
+    const blogSnap = await getDocs(collection(db, 'blogPosts'))
+    blogPages = blogSnap.docs.map(doc => {
+      const blog = doc.data()
+      return {
+        url: `${BASE_URL}/blog/${doc.id}`,
+        lastModified: blog.updatedAt ? new Date(blog.updatedAt.toDate?.() ?? blog.updatedAt) : new Date(blog.date || now),
+        changeFrequency: 'weekly' as const,
+        priority: 0.7,
+      }
+    })
+  } catch (error) {
+    console.log('Firebase blog posts not available, trying static data')
+    try {
+      // Fallback to static blog data
+      const { BLOG_POSTS } = await import('@/lib/blog-data')
+      blogPages = BLOG_POSTS.map(post => ({
+        url: `${BASE_URL}/blog/${post.slug}`,
+        lastModified: new Date(post.date),
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+      }))
+    } catch (staticError) {
+      console.log('Static blog data not available')
+    }
+  }
 
   // Dynamic business pages
   let businessPages: MetadataRoute.Sitemap = []
@@ -62,15 +83,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const q = query(collection(db, 'businesses'), where('status', '==', 'approved'))
     const snap = await getDocs(q)
     businessPages = snap.docs
-      .map(doc => doc.data())
-      .filter(data => data.slug)
-      .map(data => ({
-        url: `${BASE_URL}/${data.slug}`,
-        lastModified: data.updatedAt ? new Date(data.updatedAt.toDate?.() ?? data.updatedAt) : now,
-        changeFrequency: 'weekly' as const,
-        priority: 0.75,
-      }))
-  } catch {}
+      .map(doc => {
+        const data = doc.data()
+        return {
+          url: data.slug ? `${BASE_URL}/${data.slug}` : `${BASE_URL}/business/${doc.id}`,
+          lastModified: data.updatedAt ? new Date(data.updatedAt.toDate?.() ?? data.updatedAt) : (data.createdAt ? new Date(data.createdAt.toDate?.() ?? data.createdAt) : now),
+          changeFrequency: 'weekly' as const,
+          priority: 0.75,
+        }
+      })
+  } catch (error) {
+    console.error('Error fetching businesses for sitemap:', error)
+  }
+
+  // Additional business detail pages (for businesses without slugs)
+  let businessDetailPages: MetadataRoute.Sitemap = []
+  try {
+    const q = query(collection(db, 'businesses'), where('status', '==', 'approved'))
+    const snap = await getDocs(q)
+    businessDetailPages = snap.docs.map(doc => ({
+      url: `${BASE_URL}/business/${doc.id}`,
+      lastModified: now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    }))
+  } catch (error) {
+    console.error('Error fetching business detail pages for sitemap:', error)
+  }
 
   return [
     ...staticPages,
@@ -79,5 +118,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...cityCategoryPages,
     ...blogPages,
     ...businessPages,
+    ...businessDetailPages,
   ]
 }
