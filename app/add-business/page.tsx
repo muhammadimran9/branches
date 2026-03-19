@@ -142,13 +142,13 @@ export default function AddBusinessPage() {
       newErrors.email = 'Please enter a valid email address'
     }
     
-    // Phone number validation (Pakistan format - exactly 10 digits)
-    const phoneRegex = /^[0-9]{10}$/
-    if (form.phone && !phoneRegex.test(form.phone.replace(/[^0-9]/g, ''))) {
-      newErrors.phone = 'Please enter a valid Pakistani phone number (10 digits, e.g. 3001234567)'
+    // Phone number validation (Pakistan format - +92 followed by 10 digits or just 10 digits)
+    const phoneRegex = /^(?:\+92\s?)?[0-9]{10}$/
+    if (form.phone && !phoneRegex.test(form.phone.trim())) {
+      newErrors.phone = 'Please enter a valid Pakistani phone number (e.g. +92 300 1234567 or 3001234567)'
     }
-    if (form.whatsapp && !phoneRegex.test(form.whatsapp.replace(/[^0-9]/g, ''))) {
-      newErrors.whatsapp = 'Please enter a valid Pakistani WhatsApp number (10 digits, e.g. 3001234567)'
+    if (form.whatsapp && !phoneRegex.test(form.whatsapp.trim())) {
+      newErrors.whatsapp = 'Please enter a valid Pakistani WhatsApp number (e.g. +92 300 1234567 or 3001234567)'
     }
     
     // Description length validation
@@ -689,17 +689,6 @@ export default function AddBusinessPage() {
 
             {/* Submit */}
             <div className="px-6 md:px-8 py-8 border-t border-gray-100">
-              {/* Developer's Note */}
-              <div className="mb-6 bg-green-50 border-l-4 border-green-500 p-4 rounded">
-                <h4 className="font-bold text-green-800 mb-2">🚀 Developer's Note</h4>
-                <p className="text-green-700 text-sm">
-                  I built this business directory using Next.js 16 and Firebase to ensure lightning-fast performance for Pakistani users. 
-                  The entire system processes thousands of business listings without any slowdown, and all data is secured with Firebase's enterprise-grade security. 
-                  I specifically designed this form to be incredibly simple - no registration required, instant approval, and your business goes live immediately. 
-                  This approach eliminates the biggest friction point that prevents 80% of Pakistani businesses from getting listed online.
-                </p>
-              </div>
-              
               {status === 'error' && (
                 <div className="mb-4 flex items-center gap-2 text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm">
                   <AlertCircle className="w-4 h-4 shrink-0" />
@@ -709,7 +698,7 @@ export default function AddBusinessPage() {
               <button
                 type="submit"
                 disabled={status === 'loading'}
-                className="w-full py-4 bg-[#0f2b3d] hover:bg-[#1a3f57] disabled:opacity-60 text-white font-bold rounded-xl transition-colors duration-200 text-base flex items-center justify-center gap-2"
+                className="w-full py-4 bg-[#0f2b3d] hover:bg-[#1a3f57] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-colors duration-200 text-base flex items-center justify-center gap-2 cursor-pointer"
               >
                 {status === 'loading' ? (
                   <>

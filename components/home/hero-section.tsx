@@ -124,18 +124,6 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Developer's Note */}
-        <div className="mt-8 bg-green-500/10 backdrop-blur-md rounded-xl p-6 max-w-2xl mx-auto border border-green-400/30">
-          <h3 className="text-green-300 font-semibold mb-3 text-lg">🚀 Developer's Note</h3>
-          <p className="text-green-100 text-sm leading-relaxed">
-            I built this business directory using Next.js 16 and Firebase to ensure lightning-fast performance for Pakistani users. 
-            The entire system processes thousands of business listings without any slowdown, and all data is secured with Firebase's enterprise-grade security. 
-            I specifically designed the <a href="/add-business" className="underline text-green-200 hover:text-green-100">business submission form</a> to be incredibly simple - 
-            no registration required, instant approval, and your business goes live immediately. 
-            This approach eliminates the biggest friction point that prevents 80% of Pakistani businesses from getting listed online.
-          </p>
-        </div>
-
         {/* Additional Links */}
         <div className="mt-6 flex items-center justify-center gap-6">
           <Link
@@ -149,7 +137,14 @@ export default function HeroSection() {
             href="/blog/how-to-add-business"
             className="text-white/60 hover:text-white text-sm transition-colors"
           >
-            💡 How to Add Business Free
+            � How to Add Business Free
+          </Link>
+          <span className="text-white/30">•</span>
+          <Link
+            href="/developer"
+            className="text-white/60 hover:text-white text-sm transition-colors"
+          >
+            � Developer Notes
           </Link>
         </div>
 

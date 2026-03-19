@@ -156,36 +156,6 @@ function CategoriesContent() {
         </div>
       </section>
 
-      {/* Developer's Note */}
-      <section className="bg-green-50 border-y border-green-200 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-green-50 border-l-4 border-green-500 p-6 rounded">
-            <h3 className="font-bold text-green-800 mb-3 text-lg">🚀 Developer's Note</h3>
-            <p className="text-green-700 leading-relaxed">
-              I built this business directory using Next.js 16 and Firebase to ensure lightning-fast performance for Pakistani users. 
-              The entire system processes thousands of business listings without any slowdown, and all data is secured with Firebase's enterprise-grade security. 
-              I specifically designed the <a href="/add-business" className="underline text-green-600 hover:text-green-700">business submission form</a> to be incredibly simple - 
-              no registration required, instant approval, and your business goes live immediately. 
-              This approach eliminates the biggest friction point that prevents 80% of Pakistani businesses from getting listed online.
-            </p>
-            <div className="mt-4 flex flex-col sm:flex-row gap-3">
-              <a
-                href="/add-business"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
-              >
-                🚀 Add Your Business Now
-              </a>
-              <a
-                href="/blog/how-to-add-business"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-green-100 text-green-700 rounded-lg font-medium hover:bg-green-200 transition-colors"
-              >
-                📖 Learn How It Works
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Categories Grid or Business Listings */}
       <section className="py-14 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -92,18 +92,6 @@ export default function ContactPage() {
                     <p>Sunday: Closed</p>
                   </div>
                 </div>
-
-                {/* Developer's Note */}
-                <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded">
-                  <h3 className="font-bold text-green-800 mb-2">🚀 Developer's Note</h3>
-                  <p className="text-green-700 text-sm">
-                    I built this business directory using Next.js 16 and Firebase to ensure lightning-fast performance for Pakistani users. 
-                    The entire system processes thousands of business listings without any slowdown, and all data is secured with Firebase's enterprise-grade security. 
-                    I specifically designed the <a href="/add-business" className="underline text-green-600 hover:text-green-700">business submission form</a> to be incredibly simple - 
-                    no registration required, instant approval, and your business goes live immediately. 
-                    This approach eliminates the biggest friction point that prevents 80% of Pakistani businesses from getting listed online.
-                  </p>
-                </div>
               </aside>
 
               {/* Contact Form */}
