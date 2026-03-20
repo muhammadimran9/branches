@@ -226,7 +226,7 @@ export default function AddBusinessPage() {
       }
       
       // Create slug for business
-      const slug = createSlug(form.businessName, form.city)
+      const slug = createSlug(form.businessName || '', form.city || '')
       console.log('Generated slug:', slug)
       
       // For now, skip logo upload to avoid CORS/permissions issues
@@ -293,7 +293,7 @@ export default function AddBusinessPage() {
             <div className="space-y-3">
               {businessId && (
                 <Link
-                  href={`/${createSlug(form.businessName, form.city)}`}
+                  href={`/${createSlug(form.businessName || '', form.city || '')}`}
                   className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold text-sm hover:bg-blue-700 transition-colors"
                 >
                   <Eye className="w-4 h-4" />
