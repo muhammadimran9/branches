@@ -1,15 +1,15 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Loader2, AlertCircle, Upload, X } from 'lucide-react'
+import { Loader2, AlertCircle, Upload, X, CheckCircle2, Eye } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import CitySearchDropdown from '@/components/ui/city-search-dropdown'
 import { CATEGORIES } from '@/lib/data'
 import { db } from '@/lib/firebase'
-import { collection, addDoc, query, where, getDocs } from 'firebase/firestore'
+import { collection, addDoc, query, where, getDocs, serverTimestamp } from 'firebase/firestore'
 import { sendBusinessSubmissionEmail } from '@/lib/email-service'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
@@ -307,7 +307,7 @@ export default function AddBusinessPage() {
                   setBusinessId(null)
                   setForm({
                     businessName: '', contactPerson: '', email: '', phone: '',
-                    whatsapp: '', city: '', postalCode: '', address: '', category: '', 
+                    whatsapp: '', city: '', postalCode: '', address: '', category: '',
                     subCategory: '', description: '', websiteUrl: '', facebookPage: '',
                     googleBusiness: '', youtubeChannel: ''
                   })
