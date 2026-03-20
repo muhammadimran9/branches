@@ -146,10 +146,10 @@ export default function AddBusinessPage() {
     // Phone number validation (Pakistan format - +92 followed by 10 digits or just 10 digits)
     const phoneRegex = /^(?:\+92\s?)?[0-9]{10}$/
     if (form.phone && !phoneRegex.test(form.phone.trim())) {
-      newErrors.phone = 'Please enter a valid Pakistani phone number (e.g. +92 300 1234567 or 3001234567)'
+      newErrors.phone = 'Please enter a valid Pakistani phone number (e.g. +92 300 0000000 or 3000000000)'
     }
     if (form.whatsapp && !phoneRegex.test(form.whatsapp.trim())) {
-      newErrors.whatsapp = 'Please enter a valid Pakistani WhatsApp number (e.g. +92 300 1234567 or 3001234567)'
+      newErrors.whatsapp = 'Please enter a valid Pakistani WhatsApp number (e.g. +92 300 0000000 or 3000000000)'
     }
     
     // Description length validation
