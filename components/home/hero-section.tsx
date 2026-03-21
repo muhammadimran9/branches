@@ -30,41 +30,43 @@ export default function HeroSection() {
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <p className="inline-flex items-center gap-2 text-[#60a5fa] font-semibold text-sm mb-4 tracking-wide uppercase">
-          <span className="w-6 h-px bg-[#60a5fa]" />
-          Pakistan&apos;s #1 Business Directory
-          <span className="w-6 h-px bg-[#60a5fa]" />
+          <span className="w-4 h-px bg-[#60a5fa]" />
+          Pakistan's #1
+          <span className="w-4 h-px bg-[#60a5fa]" />
+          Business Directory
+          <span className="w-4 h-px bg-[#60a5fa]" />
         </p>
 
         <h1
           id="hero-heading"
-          className="text-3xl md:text-5xl font-bold text-white leading-tight mb-4"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4"
         >
           Tired of Your Business Being Invisible Online?
         </h1>
-        <p className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed max-w-3xl mx-auto">
+        <p className="text-base sm:text-lg md:text-xl text-white/90 mb-8 leading-relaxed max-w-2xl sm:max-w-3xl mx-auto">
           Every day, thousands of Pakistani customers are searching for businesses like yours. But if you're not listed where they're looking, you're losing money to competitors. We fix that problem - instantly.
         </p>
 
         {/* Search Bar */}
         <form
           onSubmit={handleSearch}
-          className="mt-10 bg-white rounded-2xl shadow-2xl p-3 flex flex-col sm:flex-row gap-3"
+          className="mt-6 sm:mt-8 lg:mt-10 bg-white rounded-2xl shadow-2xl p-3 sm:p-4 flex flex-col sm:flex-row gap-3"
           role="search"
           aria-label="Search businesses"
         >
           <div className="flex items-center gap-2 flex-1 px-3">
-            <Search className="w-5 h-5 text-gray-400 shrink-0" aria-hidden="true" />
+            <Search className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 shrink-0" aria-hidden="true" />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search businesses, categories..."
-              className="flex-1 text-gray-800 placeholder-gray-400 bg-transparent outline-none text-sm py-1"
+              className="flex-1 text-gray-800 placeholder-gray-400 bg-transparent outline-none text-sm sm:text-base py-1"
               aria-label="Search query"
             />
           </div>
           <div className="flex items-center gap-2 sm:border-l border-gray-200 sm:pl-3 px-3">
-            <MapPin className="w-5 h-5 text-gray-400 shrink-0" aria-hidden="true" />
+            <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 shrink-0" aria-hidden="true" />
             <select
               value={city}
               onChange={(e) => setCity(e.target.value)}
@@ -79,45 +81,45 @@ export default function HeroSection() {
           </div>
           <button
             type="submit"
-            className="bg-[#0f2b3d] hover:bg-[#1a3f57] text-white font-semibold px-6 py-3 rounded-xl transition-colors duration-200 text-sm"
+            className="bg-[#0f2b3d] hover:bg-[#1a3f57] text-white font-semibold px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl transition-colors duration-200 text-sm sm:text-base"
           >
             Search
           </button>
         </form>
 
         {/* Action Buttons */}
-        <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
           <button
             onClick={() => router.push('/add-business')}
-            className="bg-[#60a5fa] hover:bg-blue-600 text-white font-semibold px-8 py-4 rounded-xl transition-colors duration-200 text-base shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            className="bg-[#60a5fa] hover:bg-blue-600 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-colors duration-200 text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
             Add Your Business – It's Free
           </button>
           <button
             onClick={() => router.push('/categories')}
-            className="bg-white/10 hover:bg-white/20 text-white font-semibold px-8 py-4 rounded-xl transition-colors duration-200 text-base border border-white/20 backdrop-blur-sm hover:border-white/30"
+            className="bg-white/10 hover:bg-white/20 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-colors duration-200 text-sm sm:text-base border border-white/20 backdrop-blur-sm hover:border-white/30"
           >
             Browse Businesses
           </button>
         </div>
 
         {/* Problem-Solution Box */}
-        <div className="mt-8 bg-white/10 backdrop-blur-md rounded-xl p-6 max-w-2xl mx-auto border border-white/20">
-          <h3 className="text-white font-semibold mb-3 text-lg">🎯 The Real Problem We Solve</h3>
-          <p className="text-white/90 mb-4">
+        <div className="mt-6 sm:mt-8 bg-white/10 backdrop-blur-md rounded-xl p-4 sm:p-6 max-w-2xl mx-auto border border-white/20">
+          <h3 className="text-white font-semibold mb-3 text-base sm:text-lg">🎯 The Real Problem We Solve</h3>
+          <p className="text-white/90 mb-4 text-sm sm:text-base">
             80% of Pakistani businesses never get listed online because of complicated forms and registration requirements. 
             Your business deserves better than that.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={() => router.push('/add-business')}
-              className="bg-[#60a5fa] hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-lg transition-colors text-sm"
+              className="bg-[#60a5fa] hover:bg-blue-600 text-white font-medium px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg transition-colors text-sm"
             >
               🚀 Fix My Visibility Now
             </button>
             <button
               onClick={() => router.push('/blog/how-to-add-business')}
-              className="bg-white/20 hover:bg-white/30 text-white font-medium px-6 py-3 rounded-lg transition-colors text-sm"
+              className="bg-white/20 hover:bg-white/30 text-white font-medium px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg transition-colors text-sm"
             >
               📖 Learn How It Works
             </button>
@@ -125,30 +127,30 @@ export default function HeroSection() {
         </div>
 
         {/* Additional Links */}
-        <div className="mt-6 flex items-center justify-center gap-6">
+        <div className="mt-4 sm:mt-6 flex flex-wrap items-center justify-center gap-4 sm:gap-6">
           <Link
             href="/blog"
-            className="text-white/60 hover:text-white text-sm transition-colors"
+            className="text-white/60 hover:text-white text-xs sm:text-sm transition-colors"
           >
             📚 Business Guide
           </Link>
           <span className="text-white/30">•</span>
           <Link
             href="/blog/how-to-add-business"
-            className="text-white/60 hover:text-white text-sm transition-colors"
+            className="text-white/60 hover:text-white text-xs sm:text-sm transition-colors"
           >
-            � How to Add Business Free
+            📝 How to Add Business Free
           </Link>
           <span className="text-white/30">•</span>
           <Link
             href="/developer"
-            className="text-white/60 hover:text-white text-sm transition-colors"
+            className="text-white/60 hover:text-white text-xs sm:text-sm transition-colors"
           >
-            � Developer Notes
+            👨‍💻 Developer Notes
           </Link>
         </div>
 
-        <p className="mt-6 text-white/40 text-sm">
+        <p className="mt-4 sm:mt-6 text-white/40 text-xs sm:text-sm">
           Popular: Restaurants, Real Estate, Healthcare, Technology
         </p>
       </div>
