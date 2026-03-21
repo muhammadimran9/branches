@@ -104,7 +104,7 @@ export default function AdminPage() {
 
   function handleLogin(e: React.FormEvent) {
     e.preventDefault()
-    if (password === 'admin123') { // Change this in production!
+    if (password === 'PakBiz@2026!Admin') {
       localStorage.setItem('admin_auth', 'authenticated')
       setIsAuthenticated(true)
       fetchData()
