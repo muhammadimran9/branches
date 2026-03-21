@@ -307,7 +307,7 @@ export default function AddBusinessPage() {
                   setBusinessId(null)
                   setForm({
                     businessName: '', contactPerson: '', email: '', phone: '',
-                    whatsapp: '', city: '', postalCode: '', address: '', category: '',
+                    whatsapp: '', country: 'Pakistan', city: '', postalCode: '', address: '', category: '',
                     subCategory: '', description: '', websiteUrl: '', facebookPage: '',
                     googleBusiness: '', youtubeChannel: ''
                   })
