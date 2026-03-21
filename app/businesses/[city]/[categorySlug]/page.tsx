@@ -22,14 +22,7 @@ interface Business {
   logoUrl?: string
 }
 
-export async function generateStaticParams() {
-  return CITIES.flatMap(city =>
-    CATEGORIES.map(cat => ({
-      city: city.toLowerCase().replace(/ /g, '-'),
-      categorySlug: cat.id,
-    }))
-  )
-}
+export const dynamic = 'force-dynamic'
 
 function findCityBySlug(slug: string): string | null {
   const normalized = slug.replace(/-/g, ' ').toLowerCase()

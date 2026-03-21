@@ -24,7 +24,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   return {
     title,
     description,
-    keywords: post.keywords.join(', '),
+    keywords: (post.keywords || post.tags || []).join(', '),
     alternates: { canonical: url },
     openGraph: {
       title,
@@ -61,7 +61,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
     datePublished: new Date(post.date).toISOString(),
     url: pageUrl,
     mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
-    keywords: post.keywords.join(', '),
+    keywords: (post.keywords || post.tags || []).join(', '),
   }
 
   const breadcrumbSchema = {
@@ -118,7 +118,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
               {/* Tags */}
               <div className="mt-12 pt-8 border-t border-gray-100">
                 <div className="flex flex-wrap gap-2">
-                  {post.keywords.map((keyword, i) => (
+                  {(post.keywords || post.tags || []).map((keyword, i) => (
                     <span key={i} className="px-3 py-1 bg-blue-50 text-[#60a5fa] rounded-full text-sm font-medium">
                       {keyword}
                     </span>

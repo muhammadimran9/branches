@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Search, MapPin, ArrowRight, Building2, Star, Clock, Phone, Mail, Globe } from 'lucide-react'
@@ -24,7 +24,7 @@ interface Business {
   slug?: string
 }
 
-export default function RestaurantsPage() {
+function RestaurantsPageContent() {
   const searchParams = useSearchParams()
   const [city, setCity] = useState(searchParams.get('city') || '')
   const [businesses, setBusinesses] = useState<Business[]>([])
@@ -249,5 +249,17 @@ export default function RestaurantsPage() {
       </main>
       <Footer />
     </>
+  )
+}
+
+export default function RestaurantsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+      </div>
+    }>
+      <RestaurantsPageContent />
+    </Suspense>
   )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Search, MapPin, ArrowLeft, Building2, Home, TrendingUp, Clock, Phone, Mail, Shield } from 'lucide-react'
@@ -24,7 +24,7 @@ interface Business {
   slug?: string
 }
 
-export default function RealEstatePage() {
+function RealEstatePageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [businesses, setBusinesses] = useState<Business[]>([])
@@ -300,5 +300,17 @@ export default function RealEstatePage() {
       </main>
       <Footer />
     </>
+  )
+}
+
+export default function RealEstatePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
+      </div>
+    }>
+      <RealEstatePageContent />
+    </Suspense>
   )
 }

@@ -38,7 +38,6 @@ export default function Footer() {
                   <path d="M3,5 C3,5 3,6 3,6" stroke="#60a5fa" stroke-width="0.8" fill="none"/>
                 </g>
               </svg>
-              </div>
               <span className="text-white font-bold text-xl">
                 PakBiz<span className="text-[#60a5fa]">Branches</span>
               </span>
