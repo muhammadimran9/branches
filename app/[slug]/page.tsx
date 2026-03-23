@@ -76,13 +76,14 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   }
 
   const category = CATEGORIES.find(c => c.id === business.category)
-  const title = `${business.businessName} – ${category?.name ?? business.category} in ${business.city} | PakBizBranches`
-  const description = `${business.businessName} is a ${category?.name ?? business.category} business located in ${business.city}, Pakistan. ${business.description.slice(0, 120).trim()}… Contact: ${business.phone}`
+  const title = `${business.businessName} – ${business.city}`
+  const description = `${business.businessName} is a ${category?.name ?? business.category} business in ${business.city}, Pakistan. Contact: ${business.phone}`
   const url = `https://pakbizbranhces.online/${params.slug}`
 
   return {
     title,
     description,
+    keywords: `${business.businessName}, ${business.city}, ${category?.name ?? business.category}, ${business.businessName} ${business.city}, ${business.city} Pakistan, business directory Pakistan`,
     alternates: { canonical: url },
     openGraph: {
       title,
@@ -95,11 +96,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
         ? [{ url: business.logoUrl, alt: `${business.businessName} logo` }]
         : [{ url: 'https://pakbizbranhces.online/bizbranches.pk.png', alt: 'PakBizBranches' }],
     },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
+    twitter: { card: 'summary_large_image', title, description },
   }
 }
 

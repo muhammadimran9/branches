@@ -31,21 +31,29 @@ export async function generateMetadata(props: { params: Promise<{ categorySlug: 
   const category = CATEGORIES.find(c => c.id === params.categorySlug)
   if (!category) return { title: 'Category Not Found | PakBizBranches' }
 
-  const title = `${category.name} Businesses in Pakistan – Directory | PakBizBranches`
-  const description = `Find the best ${category.name.toLowerCase()} businesses across Pakistan. Browse verified listings with contact details, addresses, and reviews. Free business directory.`
+  const title = `${category.name} Pakistan – Business Directory`
+  const description = `Find ${category.name.toLowerCase()} businesses across Pakistan. Free directory with phone numbers, addresses, and verified listings.`
   const url = `${BASE_URL}/category/${params.categorySlug}`
 
   return {
     title,
     description,
+    keywords: `${category.name} Pakistan, ${category.name.toLowerCase()} Pakistan, Pakistan ${category.name.toLowerCase()}, ${category.name} directory, ${category.name} businesses Pakistan`,
     alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: 'PakBizBranches', locale: 'en_PK', type: 'website' },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: 'PakBizBranches',
+      locale: 'en_PK',
+      type: 'website',
+    },
     twitter: { card: 'summary_large_image', title, description },
   }
 }
 
 export default async function CategoryPage(props: { params: Promise<{ categorySlug: string }> }) {
-  const params = await props.params;
+  const params = await props.params
   const category = CATEGORIES.find(c => c.id === params.categorySlug)
   if (!category) notFound()
 

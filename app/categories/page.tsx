@@ -13,6 +13,13 @@ import { getCategoryIdFromName, isBusinessInCategory } from '@/lib/category-mapp
 import { db } from '@/lib/firebase'
 import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore'
 
+// Add metadata for SEO
+export const metadata = {
+  title: 'Browse Business Categories – PakBizBranches Pakistan',
+  description: 'Explore all business categories in Pakistan. Find restaurants, real estate, healthcare, education, technology, and more. Search by city and category for local businesses.',
+  keywords: 'Pakistan business categories, business directory Pakistan, find businesses by category Pakistan, local business categories Pakistan, business types Pakistan',
+}
+
 interface Business {
   id: string
   businessName: string

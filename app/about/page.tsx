@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import Navbar from '@/components/navbar'
 
 import Footer from '@/components/footer'
@@ -6,7 +7,11 @@ import Link from 'next/link'
 
 import { Target, Users, Globe, Award } from 'lucide-react'
 
-
+export const metadata: Metadata = {
+  title: 'About PakBizBranches – Pakistan Business Directory',
+  description: 'Learn about PakBizBranches, Pakistan\'s leading free business directory without registration. Our mission to connect local businesses with customers across Pakistan.',
+  keywords: 'about PakBizBranches, Pakistan business directory mission, free business listing Pakistan, local business platform Pakistan, business directory story',
+}
 
 const values = [
 

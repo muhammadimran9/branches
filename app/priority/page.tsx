@@ -9,6 +9,13 @@ import { db } from '@/lib/firebase'
 import { collection, query, where, getDocs, updateDoc, doc, serverTimestamp } from 'firebase/firestore'
 import { sendPriorityConfirmationEmail } from '@/lib/email-service'
 
+// Add metadata for SEO
+export const metadata = {
+  title: 'Priority Business Listing – PakBizBranches Pakistan',
+  description: 'Get priority business listing on PakBizBranches. Featured placement, instant verification, and premium visibility for your business across Pakistan.',
+  keywords: 'priority business listing Pakistan, featured business Pakistan, premium business directory Pakistan, business promotion Pakistan, priority listing Pakistan',
+}
+
 function PriorityPageContent() {
   const params = useParams()
   const searchParams = useSearchParams()

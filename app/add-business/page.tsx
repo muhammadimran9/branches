@@ -12,6 +12,13 @@ import { db } from '@/lib/firebase'
 import { collection, addDoc, query, where, getDocs, serverTimestamp } from 'firebase/firestore'
 import { sendBusinessSubmissionEmail } from '@/lib/email-service'
 
+// Add metadata for SEO
+export const metadata = {
+  title: 'Add Business Free – PakBizBranches Pakistan Directory',
+  description: 'Add your business to Pakistan\'s free directory without registration. Get instant online visibility, WhatsApp integration, and reach thousands of customers across Pakistan.',
+  keywords: 'add business Pakistan, free business listing Pakistan, business directory submission Pakistan, add business free Pakistan, business registration Pakistan, local business listing Pakistan',
+}
+
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
 const MAX_LOGO_MB = 2.5

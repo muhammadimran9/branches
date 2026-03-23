@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
 import './globals.css'
 export const metadata: Metadata = {
-  title: 'PakBizBranches – Pakistan Free Business Listing Directory Without Registration',
-  description:
-    'Pakistan\'s free business listing directory. Find local businesses phone numbers by city and category. Add your business free, read reviews, and get contact details. Trusted across Pakistan.',
-  keywords: 'Pakistan business directory, free business listing Pakistan without registration, free local citations pakistan, local businesses phone numbers in pakistan, verified local services near me pakistan, add business to google maps pakistan alternative, best companies in pakistan contact details, pakistan business directory with whatsapp numbers, Pakistani business listing site, add business free Pakistan, local businesses Pakistan, find businesses Pakistan, companies directory Pakistan',
+  title: 'PakBizBranches – Pakistan Free Business Directory',
+  description: 'Find local businesses in Pakistan by city and category. Add your business free without registration. Get phone numbers, WhatsApp details, and verified listings.',
+  keywords: 'Pakistan business directory, free business listing Pakistan, Pakistani business directory, local businesses Pakistan, add business free Pakistan, business contact details Pakistan, WhatsApp business directory Pakistan, verified local services Pakistan, companies directory Pakistan, find businesses Pakistan',
   authors: [{ name: 'PakBizBranches', url: 'https://pakbizbranhces.online' }],
   metadataBase: new URL('https://pakbizbranhces.online'),
   icons: {
@@ -18,9 +17,8 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'PakBizBranches – Pakistan Free Business Listing Directory Without Registration',
-    description:
-      'Pakistan\'s free business listing directory. Find local businesses phone numbers by city and category. Add your business free—no fees, no credit card. For Pakistan.',
+    title: 'PakBizBranches – Pakistan Free Business Directory',
+    description: 'Find local businesses in Pakistan by city and category. Add your business free without registration. Get phone numbers and verified listings.',
     url: 'https://pakbizbranhces.online',
     siteName: 'PakBizBranches',
     locale: 'en_PK',
@@ -28,8 +26,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'PakBizBranches – Pakistan Free Business Listing Directory Without Registration',
-    description: 'Pakistan\'s free business listing directory. Find local businesses phone numbers by city and category. Add your business free, read reviews, and get contact details.',
+    title: 'PakBizBranches – Pakistan Free Business Directory',
+    description: 'Find local businesses in Pakistan by city and category. Add your business free without registration.',
   },
   robots: {
     index: true,

@@ -4,6 +4,13 @@ import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { Code, Database, Globe, Shield, Zap, Users, Cpu, Cloud } from 'lucide-react'
 
+// Add metadata for SEO
+export const metadata = {
+  title: 'Developer Notes – PakBizBranches Technical Documentation',
+  description: 'Technical documentation and architecture of PakBizBranches. Learn about our Next.js, Firebase, and React implementation for Pakistan business directory.',
+  keywords: 'PakBizBranches developer, Next.js Pakistan, Firebase business directory, React Pakistan, business directory API, technical documentation Pakistan',
+}
+
 export default function DeveloperPage() {
   return (
     <>

@@ -5,6 +5,13 @@ import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react'
 
+// Add metadata for SEO
+export const metadata = {
+  title: 'Contact PakBizBranches – Pakistan Business Directory',
+  description: 'Get in touch with PakBizBranches team. Contact us for business listings, support, or partnerships. We\'re here to help Pakistani businesses grow.',
+  keywords: 'contact PakBizBranches, business directory support Pakistan, business listing help Pakistan, contact business directory Pakistan, customer support Pakistan',
+}
+
 export default function ContactPage() {
   const [sent, setSent] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })

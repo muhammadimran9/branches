@@ -10,6 +10,13 @@ import CitySearchDropdown from '@/components/ui/city-search-dropdown'
 import { db } from '@/lib/firebase'
 import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore'
 
+// Add metadata for SEO
+export const metadata = {
+  title: 'Restaurants in Pakistan – Food & Dining Directory',
+  description: 'Find best restaurants, cafes, and food businesses in Pakistan. Browse by city, get contact details, phone numbers, and addresses. Free restaurant directory.',
+  keywords: 'Pakistan restaurants, food directory Pakistan, cafes Pakistan, dining Pakistan, restaurants near me Pakistan, food businesses Pakistan, restaurant contact details Pakistan',
+}
+
 interface Business {
   id: string
   businessName: string

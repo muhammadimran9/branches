@@ -17,14 +17,14 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   const post = BLOG_POSTS.find(p => p.slug === params.slug)
   if (!post) return { title: 'Article Not Found | PakBizBranches' }
 
-  const title = `${post.title} | PakBizBranches Blog`
-  const description = post.excerpt
+  const title = `${post.title} – Business Blog`
+  const description = post.excerpt?.substring(0, 160) || post.description?.substring(0, 160) || 'Read this business guide on PakBizBranches blog.'
   const url = `${BASE_URL}/blog/${params.slug}`
 
   return {
     title,
     description,
-    keywords: (post.keywords || post.tags || []).join(', '),
+    keywords: (post.keywords || post.tags || []).slice(0, 8).join(', '),
     alternates: { canonical: url },
     openGraph: {
       title,

@@ -35,15 +35,23 @@ export async function generateMetadata(props: { params: Promise<{ city: string; 
   const category = CATEGORIES.find(c => c.id === params.categorySlug)
   if (!cityName || !category) return { title: 'Not Found | PakBizBranches' }
 
-  const title = `${category.name} in ${cityName} – Find Local Businesses | PakBizBranches`
-  const description = `Looking for ${category.name.toLowerCase()} businesses in ${cityName}? Browse our directory of verified local ${category.name.toLowerCase()} providers. Free contact details, addresses, and WhatsApp numbers.`
+  const title = `${category.name} ${cityName} – Pakistan Directory`
+  const description = `Find ${category.name.toLowerCase()} businesses in ${cityName}, Pakistan. Free directory with phone numbers, addresses, and contact details.`
   const url = `${BASE_URL}/businesses/${params.city}/${params.categorySlug}`
 
   return {
     title,
     description,
+    keywords: `${category.name} ${cityName}, ${cityName} ${category.name.toLowerCase()}, ${category.name.toLowerCase()} Pakistan, ${cityName} businesses, ${cityName} directory`,
     alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: 'PakBizBranches', locale: 'en_PK', type: 'website' },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: 'PakBizBranches',
+      locale: 'en_PK',
+      type: 'website',
+    },
     twitter: { card: 'summary_large_image', title, description },
   }
 }

@@ -39,13 +39,14 @@ export async function generateMetadata(props: { params: Promise<{ city: string }
   const cityName = findCityBySlug(params.city)
   if (!cityName) return { title: 'City Not Found | PakBizBranches' }
 
-  const title = `Businesses in ${cityName} – Local Business Directory | PakBizBranches`
-  const description = `Find the best local businesses in ${cityName}, Pakistan. Browse restaurants, healthcare, technology, retail, real estate, and more. Free directory with contact details.`
+  const title = `${cityName} Businesses – Pakistan Directory`
+  const description = `Find local businesses in ${cityName}, Pakistan. Search restaurants, shops, services, and more. Free directory with phone numbers and contact details.`
   const url = `${BASE_URL}/cities/${params.city}`
 
   return {
     title,
     description,
+    keywords: `${cityName} businesses, ${cityName} Pakistan, local businesses ${cityName}, business directory ${cityName}, find businesses ${cityName} Pakistan`,
     alternates: { canonical: url },
     openGraph: {
       title,
