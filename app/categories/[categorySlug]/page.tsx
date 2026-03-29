@@ -7,6 +7,7 @@ import Footer from '@/components/footer'
 import { db } from '@/lib/firebase'
 import { collection, query, where, getDocs, limit } from 'firebase/firestore'
 import { CITIES, CATEGORIES } from '@/lib/data'
+import { CATEGORY_MAPPINGS } from '@/lib/category-mappings'
 
 const BASE_URL = 'https://pakbizbranhces.online'
 
@@ -16,6 +17,7 @@ interface Business {
   slug?: string
   city: string
   description?: string
+  category: string
 }
 
 export async function generateStaticParams() {
@@ -46,10 +48,31 @@ export default async function CategoryPage(props: { params: Promise<{ categorySl
 
   let businesses: Business[] = []
   try {
-    const q = query(collection(db, 'businesses'), where('category', '==', categorySlug), limit(36))
-    const snap = await getDocs(q)
-    businesses = snap.docs.map((d) => ({ id: d.id, ...d.data() } as Business))
-  } catch {}
+    // Get all possible category names for this category
+    const possibleCategoryNames = CATEGORY_MAPPINGS[categorySlug as keyof typeof CATEGORY_MAPPINGS] || [categorySlug]
+    
+    // Create separate queries for each possible category name and combine results
+    const allBusinesses: Business[] = []
+    
+    for (const catName of possibleCategoryNames) {
+      const q = query(
+        collection(db, 'businesses'), 
+        where('category', '==', catName),
+        limit(36)
+      )
+      const snap = await getDocs(q)
+      const categoryBusinesses = snap.docs.map((d) => ({ id: d.id, ...d.data() } as Business))
+      allBusinesses.push(...categoryBusinesses)
+    }
+    
+    // Remove duplicates and limit to 36
+    const uniqueBusinesses = allBusinesses.filter((business, index, self) => 
+      index === self.findIndex((b) => b.id === business.id)
+    )
+    businesses = uniqueBusinesses.slice(0, 36)
+  } catch (error) {
+    console.error('Error fetching businesses:', error)
+  }
 
   return (
     <>
@@ -94,7 +117,7 @@ export default async function CategoryPage(props: { params: Promise<{ categorySl
               <div className="bg-white rounded-xl p-8 border text-center">
                 <Building2 className="w-12 h-12 text-gray-300 mx-auto mb-3" />
                 <p className="text-gray-600 mb-4">No listings yet in this category.</p>
-                <Link href="/add-business" className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#60a5fa] text-white rounded-lg">
+                <Link href="/add-bussiness" className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#60a5fa] text-white rounded-lg">
                   List Your Business for Free <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
