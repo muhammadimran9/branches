@@ -34,7 +34,7 @@ const SUB_CATEGORIES: Record<string, string[]> = {
   'logistics': ['Courier', 'Cargo', 'Warehousing', 'Transport', 'Supply Chain', 'Freight Forwarding'],
 }
 
-export default function AddBusinessClient() {
+export default function AddBussinessClient() {
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [status, setStatus] = useState<Status>('idle')
@@ -667,7 +667,7 @@ export default function AddBusinessClient() {
               <button
                 type="submit"
                 disabled={status === 'loading' || existingBusinesses.length > 0}
-                className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-400 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-colors text-lg shadow-lg hover:shadow-xl"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-400 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-colors text-lg shadow-lg hover:shadow-xl cursor-pointer"
               >
                 {status === 'loading' ? (
                   <>

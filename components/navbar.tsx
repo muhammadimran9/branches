@@ -9,7 +9,7 @@ const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/categories', label: 'Categories' },
   { href: '/blog', label: 'Blog' },
-  { href: '/add-business', label: 'Add Business' },
+  { href: '/add-bussiness', label: 'Add Business' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ]
@@ -50,7 +50,7 @@ export default function Navbar() {
               </Link>
             ))}
             <Link
-              href="/add-business"
+              href="/add-bussiness"
               className="ml-2 px-4 py-2 rounded-lg bg-[#60a5fa] text-white text-sm font-semibold hover:bg-blue-400 transition-colors duration-200"
             >
               List Free
@@ -89,7 +89,7 @@ export default function Navbar() {
             </Link>
           ))}
           <Link
-            href="/add-business"
+            href="/add-bussiness"
             onClick={() => setOpen(false)}
             className="mt-1 px-4 py-2 rounded-lg bg-[#60a5fa] text-white text-sm font-semibold text-center hover:bg-blue-400 transition-colors"
           >
