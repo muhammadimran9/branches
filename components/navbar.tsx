@@ -51,7 +51,7 @@ export default function Navbar() {
             ))}
             <Link
               href="/add-business"
-              className="ml-2 px-4 py-2 rounded-lg bg-[#60a5fa] text-white text-sm font-semibold hover:bg-blue-400 transition-colors duration-200"
+              className="ml-2 px-4 py-2 rounded-lg bg-[#60a5fa] text-white text-sm font-semibold hover:bg-blue-400 transition-colors duration-200 cursor-pointer"
             >
               List Free
             </Link>
@@ -59,7 +59,7 @@ export default function Navbar() {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden text-white p-2"
+            className="md:hidden text-white p-2 cursor-pointer"
             aria-label={open ? 'Close menu' : 'Open menu'}
             onClick={() => setOpen(!open)}
           >

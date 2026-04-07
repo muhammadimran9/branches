@@ -81,7 +81,7 @@ export default function HeroSection() {
           </div>
           <button
             type="submit"
-            className="bg-[#0f2b3d] hover:bg-[#1a3f57] text-white font-semibold px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl transition-colors duration-200 text-sm sm:text-base"
+            className="bg-[#0f2b3d] hover:bg-[#1a3f57] text-white font-semibold px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl transition-colors duration-200 text-sm sm:text-base cursor-pointer"
           >
             Search
           </button>
@@ -91,13 +91,13 @@ export default function HeroSection() {
         <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
           <button
             onClick={() => router.push('/add-business')}
-            className="bg-[#60a5fa] hover:bg-blue-600 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-colors duration-200 text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            className="bg-[#60a5fa] hover:bg-blue-600 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-colors duration-200 text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 cursor-pointer"
           >
             List Your Business for Free
           </button>
           <button
             onClick={() => router.push('/categories')}
-            className="bg-white/10 hover:bg-white/20 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-colors duration-200 text-sm sm:text-base border border-white/20 backdrop-blur-sm hover:border-white/30"
+            className="bg-white/10 hover:bg-white/20 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-colors duration-200 text-sm sm:text-base border border-white/20 backdrop-blur-sm hover:border-white/30 cursor-pointer"
           >
             Browse Categories
           </button>
