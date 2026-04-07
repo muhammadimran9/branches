@@ -9,14 +9,6 @@ import Footer from '@/components/footer'
 import { db } from '@/lib/firebase'
 import { doc, getDoc } from 'firebase/firestore'
 import { CATEGORIES } from '@/lib/data'
-import { Metadata } from 'next'
-
-// Add metadata for SEO
-export const metadata: Metadata = {
-  title: 'Business Details – PakBizBranches Pakistan Directory',
-  description: 'View complete business information including contact details, address, phone numbers, and WhatsApp. Verified business listings across Pakistan.',
-  keywords: 'business details Pakistan, business contact Pakistan, business information Pakistan, verified business Pakistan, business directory Pakistan',
-}
 
 interface Business {
   id: string
