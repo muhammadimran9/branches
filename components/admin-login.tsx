@@ -1,8 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '@/lib/firebase'
 import { Shield, Mail, Lock, AlertCircle, Loader2 } from 'lucide-react'
 
 interface FailedAttempt {
@@ -99,58 +97,29 @@ export default function AdminLogin({ onLoginSuccess }: { onLoginSuccess: () => v
     setError('')
 
     try {
-      // Attempt Firebase authentication
-      await signInWithEmailAndPassword(auth, email, password)
+      // Hardcoded admin credentials
+      const validAdminEmail = 'pakbizbrances@gmail.com'
+      const validAdminPassword = 'Imran@6230$%'
       
-      // Check if user is admin (you might want to create an admin role in Firestore)
-      const user = auth.currentUser
-      if (user) {
-        // For now, we'll check if the email is in a list of admin emails
-        // In production, you should check user roles in Firestore
-        const adminEmails = [
-          'admin@pakbizbranches.online',
-          'support@pakbizbranches.online',
-          // Add more admin emails as needed
-        ]
+      // Check if credentials match
+      if (email === validAdminEmail && password === validAdminPassword) {
+        // Clear failed attempts on successful login
+        clearFailedAttempts(email)
+        localStorage.setItem('admin_authenticated', 'true')
+        localStorage.setItem('admin_email', email)
+        onLoginSuccess()
+      } else {
+        setError('Invalid email or password')
         
-        if (adminEmails.includes(user.email!)) {
-          // Clear failed attempts on successful login
-          clearFailedAttempts(email)
-          localStorage.setItem('admin_authenticated', 'true')
-          localStorage.setItem('admin_email', user.email!)
-          onLoginSuccess()
-        } else {
-          setError('Access denied. Admin privileges required.')
-          await auth.signOut()
-          const shouldBlock = recordFailedAttempt(email)
-          if (shouldBlock) {
-            setError('Account blocked for 1 hour due to multiple failed attempts')
-          }
+        // Record failed attempt
+        const shouldBlock = recordFailedAttempt(email)
+        if (shouldBlock) {
+          setError('Account blocked for 1 hour due to multiple failed attempts')
         }
       }
     } catch (error: any) {
       console.error('Login error:', error)
-      
-      // Record failed attempt
-      const shouldBlock = recordFailedAttempt(email)
-      
-      if (shouldBlock) {
-        setError('Account blocked for 1 hour due to multiple failed attempts')
-      } else {
-        switch (error.code) {
-          case 'auth/user-not-found':
-            setError('Invalid email or password')
-            break
-          case 'auth/wrong-password':
-            setError('Invalid email or password')
-            break
-          case 'auth/too-many-requests':
-            setError('Too many attempts. Please try again later')
-            break
-          default:
-            setError('Login failed. Please try again')
-        }
-      }
+      setError('Login failed. Please try again')
     } finally {
       setLoading(false)
     }
