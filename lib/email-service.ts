@@ -3,6 +3,10 @@ export interface EmailData {
   to: string
   businessName: string
   businessId: string
+  email: string
+  phone: string
+  category: string
+  city: string
 }
 
 export interface PriorityEmailData {

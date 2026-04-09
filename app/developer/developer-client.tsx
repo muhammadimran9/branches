@@ -240,8 +240,8 @@ export default function DeveloperClient() {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-3">Firebase Integration</h3>
                     <div className="bg-gray-50 rounded-xl p-4 font-mono text-sm">
-                      <div className="mb-2">import { db } from '@/lib/firebase'</div>
-                      <div className="mb-2">import { collection, addDoc, getDocs } from 'firebase/firestore'</div>
+                      <div className="mb-2">{'import { db } from \'@/lib/firebase\''}</div>
+                      <div className="mb-2">{'import { collection, addDoc, getDocs } from \'firebase/firestore\''}</div>
                     </div>
                   </div>
                   
@@ -265,7 +265,7 @@ export default function DeveloperClient() {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-3">Email Service</h3>
                     <div className="bg-gray-50 rounded-xl p-4 font-mono text-sm">
-                      <div className="mb-2">import { sendBusinessSubmissionEmail } from '@/lib/email-service'</div>
+                      <div className="mb-2">{'import { sendBusinessSubmissionEmail } from \'@/lib/email-service\''}</div>
                       <div className="mb-2">await sendBusinessSubmissionEmail(businessData)</div>
                     </div>
                   </div>

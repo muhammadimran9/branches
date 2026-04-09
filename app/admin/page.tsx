@@ -4,10 +4,11 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Search, Edit2, Trash2, Eye, Users, Building2, Mail, Phone, Shield, LogOut, CheckCircle, XCircle, AlertCircle } from 'lucide-react'
+import { signOut, onAuthStateChanged } from 'firebase/auth'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
-import AdminAuthGuard from '@/components/admin-auth-guard'
-import { db } from '@/lib/firebase'
+import AdminLogin from '@/components/admin-login'
+import { db, auth } from '@/lib/firebase'
 import { collection, query, orderBy, getDocs, doc, deleteDoc, updateDoc } from 'firebase/firestore'
 
 interface Business {
@@ -51,18 +52,35 @@ export default function AdminPage() {
   const [editForm, setEditForm] = useState<Partial<Business>>({})
   const [activeTab, setActiveTab] = useState<'businesses' | 'contacts'>('businesses')
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
-
-  // Simple authentication (in production, use proper auth)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [password, setPassword] = useState('')
+  const [currentUser, setCurrentUser] = useState<any>(null)
 
   useEffect(() => {
-    // Check authentication
-    const auth = localStorage.getItem('admin_auth')
-    if (auth === 'authenticated') {
-      setIsAuthenticated(true)
-      fetchData()
-    }
+    // Check Firebase authentication state
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Check if user is admin
+        const adminEmails = [
+          'admin@pakbizbranches.online',
+          'support@pakbizbranches.online',
+        ]
+        
+        if (adminEmails.includes(user.email!)) {
+          setIsAuthenticated(true)
+          setCurrentUser(user)
+          fetchData()
+        } else {
+          // User is not admin, sign them out
+          signOut(auth)
+          setIsAuthenticated(false)
+        }
+      } else {
+        setIsAuthenticated(false)
+        setCurrentUser(null)
+      }
+    })
+
+    return () => unsubscribe()
   }, [])
 
   async function fetchData() {
@@ -102,21 +120,21 @@ export default function AdminPage() {
     }
   }
 
-  function handleLogin(e: React.FormEvent) {
-    e.preventDefault()
-    if (password === 'PakBiz@2026!Admin') {
-      localStorage.setItem('admin_auth', 'authenticated')
-      setIsAuthenticated(true)
-      fetchData()
-    } else {
-      alert('Invalid password')
-    }
+  const handleLoginSuccess = () => {
+    setIsAuthenticated(true)
+    fetchData()
   }
 
-  function handleLogout() {
-    localStorage.removeItem('admin_auth')
-    setIsAuthenticated(false)
-    setPassword('')
+  async function handleLogout() {
+    try {
+      await signOut(auth)
+      localStorage.removeItem('admin_authenticated')
+      localStorage.removeItem('admin_email')
+      setIsAuthenticated(false)
+      setCurrentUser(null)
+    } catch (error) {
+      console.error('Logout error:', error)
+    }
   }
 
   async function handleDeleteBusiness(businessId: string) {
@@ -170,56 +188,10 @@ export default function AdminPage() {
   )
 
   if (!isAuthenticated) {
-    return (
-      <>
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center">
-          <div className="max-w-md w-full mx-4">
-            <div className="bg-white rounded-2xl shadow-2xl p-8">
-              <div className="flex items-center justify-center mb-8">
-                <Shield className="w-12 h-12 text-blue-600" />
-                <h1 className="text-2xl font-bold text-gray-900 ml-3">Admin Login</h1>
-              </div>
-              
-              <form onSubmit={handleLogin} className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Admin Password
-                  </label>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
-                    placeholder="Enter password"
-                    required
-                  />
-                </div>
-                
-                <button
-                  type="submit"
-                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors"
-                >
-                  Login to Admin Panel
-                </button>
-              </form>
-              
-              <div className="mt-6 text-center">
-                <Link
-                  href="/"
-                  className="text-blue-600 hover:text-blue-700 text-sm font-medium"
-                >
-                  ← Back to Website
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    )
+    return <AdminLogin onLoginSuccess={handleLoginSuccess} />
   }
 
   return (
-    <AdminAuthGuard>
       <div className="min-h-screen bg-gray-50">
         {/* Admin Header */}
         <header className="bg-white border-b border-gray-200">
@@ -227,7 +199,10 @@ export default function AdminPage() {
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center gap-3">
                 <Shield className="w-8 h-8 text-blue-600" />
-                <h1 className="text-xl font-bold text-gray-900">Admin Panel</h1>
+                <div>
+                  <h1 className="text-xl font-bold text-gray-900">Admin Panel</h1>
+                  <p className="text-sm text-gray-500">{currentUser?.email}</p>
+                </div>
               </div>
               
               <div className="flex items-center gap-4">
@@ -590,6 +565,5 @@ export default function AdminPage() {
           </div>
         )}
       </div>
-    </AdminAuthGuard>
   )
 }

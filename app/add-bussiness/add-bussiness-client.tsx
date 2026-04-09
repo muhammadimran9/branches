@@ -240,7 +240,9 @@ export default function AddBussinessClient() {
 
       // Send notification email
       await sendBusinessSubmissionEmail({
+        to: formData.email,
         businessName: formData.businessName,
+        businessId: docRef.id,
         email: formData.email,
         phone: formData.phone,
         category: formData.category,
@@ -249,28 +251,11 @@ export default function AddBussinessClient() {
 
       setStatus('success')
       
-      // Reset form after delay
+      // Redirect to business page after short delay
       setTimeout(() => {
-        setFormData({
-          businessName: '',
-          category: '',
-          subcategory: '',
-          description: '',
-          phone: '',
-          whatsapp: '',
-          email: '',
-          website: '',
-          address: '',
-          city: '',
-          logoUrl: '',
-        })
-        setLogoPreview(null)
-        setDescriptionCharCount(0)
-        setStatus('idle')
-        if (fileInputRef.current) {
-          fileInputRef.current.value = ''
-        }
-      }, 5000)
+        const businessSlug = generateSlug(formData.businessName, formData.city)
+        router.push(`/${businessSlug}`)
+      }, 2000)
 
     } catch (error) {
       console.error('Error submitting business:', error)
@@ -325,7 +310,7 @@ export default function AddBussinessClient() {
                 <div>
                   <h3 className="font-semibold text-green-800">Business Submitted Successfully!</h3>
                   <p className="text-green-700 text-sm">
-                    Your business has been submitted and will be reviewed within 24 hours. You'll receive a confirmation email shortly.
+                    Your business has been approved! Redirecting to your business page...
                   </p>
                 </div>
               </div>

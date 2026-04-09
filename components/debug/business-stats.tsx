@@ -12,7 +12,12 @@ interface Business {
 }
 
 export default function BusinessDebug() {
-  const [stats, setStats] = useState({
+  const [stats, setStats] = useState<{
+    total: number
+    approved: number
+    pending: number
+    latest: Business[]
+  }>({
     total: 0,
     approved: 0,
     pending: 0,

@@ -18,7 +18,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   if (!post) return { title: 'Article Not Found | PakBizBranches' }
 
   const title = `${post.title} – Business Blog`
-  const description = post.excerpt?.substring(0, 160) || post.description?.substring(0, 160) || 'Read this business guide on PakBizBranches blog.'
+  const description = post.excerpt?.substring(0, 160) || 'Read this business guide on PakBizBranches blog.'
   const url = `${BASE_URL}/blog/${params.slug}`
 
   return {
