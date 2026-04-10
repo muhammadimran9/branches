@@ -98,22 +98,24 @@ export default function AddBussinessClient() {
   // Load advertisement script
   useEffect(() => {
     const loadAds = () => {
-      const script = document.createElement('script')
-      script.async = true
-      script.src = 'https://www.highperformanceformat.com/07e5beba21527d8979cd7e4953709385/invoke.js'
-      
-      // Set atOptions window variable
-      ;(window as any).atOptions = {
+      // Set atOptions FIRST before loading script
+      (window as any).atOptions = {
         'key': '07e5beba21527d8979cd7e4953709385',
         'format': 'iframe',
         'height': 600,
         'width': 160,
         'params': {}
       }
-      
+
       const adContainer = document.getElementById('ad-container')
       if (adContainer) {
+        // Clear placeholder
         adContainer.innerHTML = ''
+        
+        // Create and append script
+        const script = document.createElement('script')
+        script.async = true
+        script.src = 'https://www.highperformanceformat.com/07e5beba21527d8979cd7e4953709385/invoke.js'
         adContainer.appendChild(script)
       }
     }
