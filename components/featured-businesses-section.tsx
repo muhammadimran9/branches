@@ -1,29 +1,30 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Building2, MapPin, Phone, MessageCircle, Star } from 'lucide-react'
-import { db } from '@/lib/firebase'
-import { collection, query, where, orderBy, limit, getDocs } from 'firebase/firestore'
 import { CATEGORIES } from '@/lib/data'
 import * as Icons from '@/components/ui/icons'
 
 interface Business {
   id: string
   businessName: string
-  contactPerson: string
-  email: string
+  contactPerson?: string
+  email?: string
   phone: string
   whatsapp?: string
   city: string
-  address: string
+  address?: string
   category: string
   description: string
   logoUrl?: string
   slug?: string
-  createdAt: any
+  createdAt?: any
   status: string
   isFeatured?: boolean
+}
+
+interface FeaturedBusinessesSectionProps {
+  businesses: Business[]
 }
 
 const categoryIcons: { [key: string]: React.ComponentType<{ className?: string }> } = {
@@ -41,68 +42,7 @@ const categoryIcons: { [key: string]: React.ComponentType<{ className?: string }
   'logistics': Icons.LogisticsIcon,
 }
 
-export default function FeaturedBusinessesSection() {
-  const [businesses, setBusinesses] = useState<Business[]>([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    async function fetchFeaturedBusinesses() {
-      try {
-        const q = query(
-          collection(db, 'businesses'),
-          where('isFeatured', '==', true),
-          orderBy('createdAt', 'desc'),
-          limit(4)
-        )
-        const querySnapshot = await getDocs(q)
-        
-        const businessList: Business[] = []
-        querySnapshot.forEach((doc) => {
-          const data = doc.data()
-          const status = String((data.status ?? 'approved')).toLowerCase().trim()
-          
-          if (status === 'approved' || status === 'pending' || status === 'live') {
-            businessList.push({
-              id: doc.id,
-              ...data
-            } as Business)
-          }
-        })
-        
-        setBusinesses(businessList)
-      } catch (error) {
-        console.error('Error fetching featured businesses:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchFeaturedBusinesses()
-  }, [])
-
-  if (loading) {
-    return (
-      <section className="py-16 bg-gradient-to-br from-amber-50 to-orange-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-800">Featured Businesses</h2>
-            <p className="mt-3 text-slate-600 text-lg">Handpicked businesses for you</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 animate-pulse">
-                <div className="w-16 h-16 bg-slate-200 rounded-xl mb-4"></div>
-                <div className="h-4 bg-slate-200 rounded mb-2"></div>
-                <div className="h-3 bg-slate-200 rounded mb-4"></div>
-                <div className="h-3 bg-slate-200 rounded"></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    )
-  }
-
+export default function FeaturedBusinessesSection({ businesses }: FeaturedBusinessesSectionProps) {
   if (businesses.length === 0) {
     return null
   }
