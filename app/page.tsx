@@ -9,6 +9,7 @@ import LatestBusinesses from '@/components/home/latest-businesses'
 import CategoriesGrid from '@/components/home/categories-grid'
 import CitiesGrid from '@/components/home/cities-grid'
 import CTASection from '@/components/home/cta-section'
+import { fetchLatestBusinesses, fetchFeaturedBusinesses } from '@/lib/firebase-server'
 
 export const metadata: Metadata = {
   title: 'Pakistan Business Directory | Find Local Businesses',
@@ -28,7 +29,12 @@ export const metadata: Metadata = {
   },
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Fetch data on the server side for better performance
+  const [latestBusinesses, featuredBusinesses] = await Promise.all([
+    fetchLatestBusinesses(8),
+    fetchFeaturedBusinesses(4),
+  ])
   return (
     <>
       <Navbar />
@@ -36,8 +42,8 @@ export default function HomePage() {
         <HeroSection />
         <AboutSection />
         <StatsSection />
-        <FeaturedBusinessesSection />
-        <LatestBusinesses />
+        <FeaturedBusinessesSection businesses={featuredBusinesses} />
+        <LatestBusinesses businesses={latestBusinesses} />
         <CategoriesGrid />
         <CitiesGrid />
         <CTASection />

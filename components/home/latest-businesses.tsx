@@ -1,28 +1,29 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Building2, MapPin, Phone, MessageCircle } from 'lucide-react'
-import { db } from '@/lib/firebase'
-import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore'
+import { Building2, MapPin, Phone, MessageCircle, ArrowRight } from 'lucide-react'
 import { CATEGORIES } from '@/lib/data'
 import * as Icons from '@/components/ui/icons'
 
 interface Business {
   id: string
   businessName: string
-  contactPerson: string
-  email: string
+  contactPerson?: string
+  email?: string
   phone: string
   whatsapp?: string
   city: string
-  address: string
+  address?: string
   category: string
   description: string
   logoUrl?: string
   slug?: string
-  createdAt: any
+  createdAt?: any
   status: string
+}
+
+interface LatestBusinessesProps {
+  businesses: Business[]
 }
 
 const categoryIcons: { [key: string]: React.ComponentType<{ className?: string }> } = {
@@ -40,76 +41,7 @@ const categoryIcons: { [key: string]: React.ComponentType<{ className?: string }
   'logistics': Icons.LogisticsIcon,
 }
 
-export default function LatestBusinesses() {
-  const [businesses, setBusinesses] = useState<Business[]>([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    async function fetchLatestBusinesses() {
-      try {
-        console.log('[v0] Starting to fetch latest businesses from Firebase...')
-        const q = query(
-          collection(db, 'businesses'),
-          orderBy('createdAt', 'desc'),
-          limit(100)
-        )
-        const querySnapshot = await getDocs(q)
-        console.log('[v0] Total documents returned from Firebase:', querySnapshot.size)
-        
-        const businessList: Business[] = []
-        
-        querySnapshot.forEach((doc) => {
-          const data = doc.data()
-          const business = {
-            id: doc.id,
-            ...data
-          } as Business
-          
-          // Filter: only include businesses with status "approved", "pending", or "live"
-          const status = String((data.status ?? 'approved')).toLowerCase().trim()
-          console.log('[v0] Business:', business.businessName, '| Status:', status, '| Category:', business.category)
-          
-          if (status === 'approved' || status === 'pending' || status === 'live') {
-            businessList.push(business)
-          }
-        })
-        
-        console.log('[v0] Total filtered businesses:', businessList.length)
-        console.log('[v0] Displaying first 8 businesses')
-        setBusinesses(businessList.slice(0, 8))
-      } catch (error) {
-        console.error('[v0] Error fetching latest businesses:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchLatestBusinesses()
-  }, [])
-
-  if (loading) {
-    return (
-      <section className="py-16 bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-800">Latest Businesses</h2>
-            <p className="mt-3 text-slate-600 text-lg">Discover newly added businesses in your area</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 animate-pulse">
-                <div className="w-16 h-16 bg-slate-200 rounded-xl mb-4"></div>
-                <div className="h-4 bg-slate-200 rounded mb-2"></div>
-                <div className="h-3 bg-slate-200 rounded mb-4"></div>
-                <div className="h-3 bg-slate-200 rounded"></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    )
-  }
-
+export default function LatestBusinesses({ businesses }: LatestBusinessesProps) {
   if (businesses.length === 0) {
     return (
       <section className="py-16 bg-white" aria-labelledby="latest-businesses-heading">
@@ -166,6 +98,7 @@ export default function LatestBusinesses() {
                       src={business.logoUrl}
                       alt={`${business.businessName} logo`}
                       className="w-16 h-16 rounded-lg object-cover border-2 border-white shadow-sm"
+                      loading="lazy"
                     />
                   ) : (
                     <div 
@@ -250,7 +183,7 @@ export default function LatestBusinesses() {
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-blue-600 text-white rounded-xl font-semibold text-sm hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
           >
             View All Businesses
-            <span>→</span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>

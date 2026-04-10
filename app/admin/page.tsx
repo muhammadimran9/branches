@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Search, Edit2, Trash2, Eye, Users, Building2, Mail, Phone, Shield, LogOut, CheckCircle, XCircle, AlertCircle, Star } from 'lucide-react'
+import { Search, Edit2, Trash2, Eye, Users, Building2, Mail, Phone, Shield, LogOut, CheckCircle, XCircle, AlertCircle, Star, Settings } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import AdminLogin from '@/components/admin-login'
 import { db } from '@/lib/firebase'
 import { collection, query, orderBy, getDocs, doc, deleteDoc, updateDoc } from 'firebase/firestore'
+import { MAIN_PAGES } from '@/lib/pages-config'
 
 interface Business {
   id: string
@@ -50,7 +51,7 @@ export default function AdminPage() {
   const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(null)
   const [isEditing, setIsEditing] = useState(false)
   const [editForm, setEditForm] = useState<Partial<Business>>({})
-  const [activeTab, setActiveTab] = useState<'businesses' | 'contacts'>('businesses')
+  const [activeTab, setActiveTab] = useState<'businesses' | 'contacts' | 'pages'>('businesses')
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [currentUser, setCurrentUser] = useState<any>(null)
@@ -298,6 +299,17 @@ export default function AdminPage() {
                 >
                   Contact Forms ({contacts.length})
                 </button>
+                <button
+                  onClick={() => setActiveTab('pages')}
+                  className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2 ${
+                    activeTab === 'pages'
+                      ? 'border-blue-500 text-blue-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700'
+                  }`}
+                >
+                  <Settings className="w-4 h-4" />
+                  Page Settings
+                </button>
               </nav>
             </div>
           </div>
@@ -442,6 +454,57 @@ export default function AdminPage() {
                     </tbody>
                   </table>
                 )}
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'pages' && (
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+              <div className="p-6 border-b border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Page Management</h3>
+                <p className="text-sm text-gray-600">Configure and manage main website pages</p>
+              </div>
+              
+              <div className="divide-y divide-gray-200">
+                {MAIN_PAGES.map((page) => (
+                  <div key={page.slug} className="p-6 hover:bg-gray-50 transition-colors">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h4 className="text-base font-semibold text-gray-900">{page.title}</h4>
+                          <span className="text-xs font-mono text-gray-600 bg-gray-100 px-2 py-1 rounded">
+                            {page.slug || '/'}
+                          </span>
+                          {page.requiresAuth && (
+                            <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">
+                              Protected
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-sm text-gray-600 mb-2">{page.description}</p>
+                        <div className="flex items-center gap-4 text-xs text-gray-600">
+                          <span>Priority: <strong>#{page.priority}</strong></span>
+                          <span>Status: <strong className={page.enabled ? 'text-green-600' : 'text-red-600'}>
+                            {page.enabled ? 'Enabled' : 'Disabled'}
+                          </strong></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="p-6 bg-blue-50 border-t border-gray-200">
+                <h4 className="font-semibold text-blue-900 mb-2">About Page Settings</h4>
+                <p className="text-sm text-blue-800 mb-3">
+                  This system maintains 10 core pages to optimize performance. Extra pages are controlled in <code className="bg-white px-2 py-1 rounded font-mono">/lib/pages-config.ts</code>
+                </p>
+                <ul className="text-sm text-blue-800 space-y-1 list-disc list-inside">
+                  <li>Each page can be enabled or disabled</li>
+                  <li>Protected pages require authentication</li>
+                  <li>Modify pages-config.ts to change settings</li>
+                  <li>robots.txt ensures crawlers only index active pages</li>
+                </ul>
               </div>
             </div>
           )}
