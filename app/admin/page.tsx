@@ -222,6 +222,12 @@ export default function AdminPage() {
               
               <div className="flex items-center gap-4">
                 <Link
+                  href="/admin/seed"
+                  className="hidden sm:inline-flex items-center gap-2 px-3 py-2 text-sm text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg font-medium transition-colors"
+                >
+                  Seed Sample Data
+                </Link>
+                <Link
                   href="/"
                   className="text-gray-600 hover:text-gray-900 font-medium"
                 >
