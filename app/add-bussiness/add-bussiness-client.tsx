@@ -43,6 +43,7 @@ export default function AddBussinessClient() {
     businessName: '',
     category: '',
     subcategory: '',
+    branchCode: '',
     description: '',
     phone: '',
     whatsapp: '',
@@ -245,17 +246,18 @@ export default function AddBussinessClient() {
     setStatus('loading')
 
     try {
-      const businessData = {
-        ...formData,
-        businessName: formData.businessName.trim(),
-        description: formData.description.trim(),
-        phone: formData.phone.trim(),
-        whatsapp: formData.whatsapp.trim(),
-        email: formData.email.trim().toLowerCase(),
-        websiteUrl: formData.website.trim(),
-        address: formData.address.trim(),
-        city: formData.city.trim(),
-        category: normalizeCategoryForStorage(formData.category),
+const businessData = {
+  ...formData,
+  businessName: formData.businessName.trim(),
+  description: formData.description.trim(),
+  phone: formData.phone.trim(),
+  whatsapp: formData.whatsapp.trim(),
+  email: formData.email.trim().toLowerCase(),
+  websiteUrl: formData.website.trim(),
+  address: formData.address.trim(),
+  city: formData.city.trim(),
+  branchCode: formData.branchCode?.trim() || '',
+  category: normalizeCategoryForStorage(formData.category),
         categoryId: normalizeCategoryForStorage(formData.category),
         categorySlug: normalizeCategoryForStorage(formData.category),
         subCategory: formData.subcategory.trim(),
@@ -480,6 +482,26 @@ export default function AddBussinessClient() {
                         </option>
                       ))}
                     </select>
+                  </div>
+                )}
+
+                {/* Branch Code field - only shown for Banks subcategory */}
+                {formData.category === 'finance' && formData.subcategory === 'Banks' && (
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      Branch Code
+                    </label>
+                    <input
+                      type="text"
+                      name="branchCode"
+                      value={formData.branchCode}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      placeholder="e.g., 0052"
+                    />
+                    <p className="mt-1 text-xs text-slate-500">
+                      Enter the bank branch code (e.g., 0052 for HBL branches)
+                    </p>
                   </div>
                 )}
 
