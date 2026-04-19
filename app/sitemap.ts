@@ -19,6 +19,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/developer`, lastModified: now, changeFrequency: 'monthly', priority: 0.4 },
   ]
 
+  // Bank branch pages (SEO optimized for specific keywords)
+  const bankBranchPages: MetadataRoute.Sitemap = [
+    { 
+      url: `${BASE_URL}/habib-bank-limited-f-10-markaz-branch-islamabad`, 
+      lastModified: now, 
+      changeFrequency: 'weekly', 
+      priority: 0.9 
+    },
+    { 
+      url: `${BASE_URL}/standard-chartered-bank-johar-town-branch-lahore`, 
+      lastModified: now, 
+      changeFrequency: 'weekly', 
+      priority: 0.9 
+    },
+  ]
+
   // Programmatic city pages
   const cityPages: MetadataRoute.Sitemap = CITIES.map(city => ({
     url: `${BASE_URL}/cities/${encodeURIComponent(city.toLowerCase().replace(/ /g, '-'))}`,
@@ -102,6 +118,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticPages,
+    ...bankBranchPages,
     ...cityPages,
     ...categoryPages,
     ...cityCategoryPages,
