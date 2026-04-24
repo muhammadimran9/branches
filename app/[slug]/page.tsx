@@ -191,6 +191,37 @@ export default async function BusinessPage(props: { params: Promise<{ slug: stri
     ],
   }
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: `Where is ${business.businessName} located?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `${business.businessName} is located at ${business.address}, ${business.city}, Pakistan.`,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: `What is the contact number for ${business.businessName}?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `You can contact ${business.businessName} at ${business.phone}.`,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: `What category does ${business.businessName} belong to?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `${business.businessName} is listed under the ${category?.name ?? business.category} category.`,
+        },
+      },
+    ],
+  }
+
   return (
     <>
       <Navbar />
@@ -201,6 +232,10 @@ export default async function BusinessPage(props: { params: Promise<{ slug: stri
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <main className="bg-[#f8fafc] min-h-screen">
         {/* Header */}
@@ -319,6 +354,43 @@ export default async function BusinessPage(props: { params: Promise<{ slug: stri
                   <p className="text-gray-600 leading-relaxed text-lg">
                     {business.description}
                   </p>
+                  
+                  {/* Service Highlights / Dynamic Points */}
+                  <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="flex items-start gap-3 p-4 bg-blue-50 rounded-xl border border-blue-100">
+                      <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm">
+                        <span className="text-[#60a5fa] font-bold">✓</span>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-[#0f2b3d] text-sm">Verified Contact</p>
+                        <p className="text-xs text-gray-500">Phone & WhatsApp verified</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-4 bg-green-50 rounded-xl border border-green-100">
+                      <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm">
+                        <span className="text-green-600 font-bold">✓</span>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-[#0f2b3d] text-sm">Local Business</p>
+                        <p className="text-xs text-gray-500">Serving {business.city} area</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* FAQ Section */}
+                <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                  <h2 className="text-2xl font-bold text-[#0f2b3d] mb-6">Frequently Asked Questions</h2>
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="font-bold text-[#0f2b3d] mb-2">How do I contact {business.businessName}?</h3>
+                      <p className="text-gray-600">You can call them directly at <a href={`tel:${business.phone}`} className="text-[#60a5fa] hover:underline font-medium">{business.phone}</a> or visit them at {business.address}, {business.city}.</p>
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-[#0f2b3d] mb-2">What services does {business.businessName} provide?</h3>
+                      <p className="text-gray-600">As a business in the {category?.name ?? business.category} category, they provide services related to {business.subCategory || (category?.name ?? business.category)}. Contact them for specific service details.</p>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Google Maps Embed */}
@@ -542,8 +614,8 @@ export default async function BusinessPage(props: { params: Promise<{ slug: stri
             <div className="mt-12 bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
               <h2 className="text-lg font-bold text-[#0f2b3d] mb-4">Explore More</h2>
               <div className="flex flex-wrap gap-3">
-                <Link href={categoryUrl} className="px-4 py-2 bg-blue-50 text-[#60a5fa] rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors">
-                  More {category?.name} Businesses
+                <Link href={`/locations/${business.city.toLowerCase().replace(/ /g, '-')}/${business.category}`} className="px-4 py-2 bg-blue-50 text-[#60a5fa] rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors">
+                  More {category?.name} in {business.city}
                 </Link>
                 <Link href={cityUrl} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
                   All Businesses in {business.city}

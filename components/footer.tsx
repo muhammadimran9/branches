@@ -154,8 +154,8 @@ export default function Footer() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-white/40">
             <p>&copy; {new Date().getFullYear()} PakBizBranches. All rights reserved.</p>
             <div className="flex gap-4">
-              <a href="#" className="hover:text-white/70 transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white/70 transition-colors">Terms of Service</a>
+              <Link href="/privacy" className="hover:text-white/70 transition-colors">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-white/70 transition-colors">Terms of Service</Link>
             </div>
           </div>
         </div>

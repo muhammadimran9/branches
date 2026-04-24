@@ -19,16 +19,16 @@ import { fetchLatestBusinesses, fetchFeaturedBusinesses } from '@/lib/firebase-s
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'Pakistan Business Directory | Find Local Businesses',
+  title: 'Pakistan Business Directory | Free Local Business Listings',
   description:
-    'Search Pakistan businesses by category and city. Compare phone numbers, locations, and services. List your business for free on PakBizBranches.',
+    'Search Pakistan businesses by category and city. Find verified phone numbers, locations, and services. List your business for free today on PakBizBranches.',
   alternates: {
     canonical: 'https://pakbizbranhces.online/',
   },
   openGraph: {
-    title: 'Pakistan Business Directory | Find Local Businesses',
+    title: 'Pakistan Business Directory | Free Local Business Listings',
     description:
-      'Search Pakistan businesses by category and city. Compare phone numbers, locations, and services. List your business for free on PakBizBranches.',
+      'Search Pakistan businesses by category and city. Find verified phone numbers, locations, and services. List your business for free today on PakBizBranches.',
     url: 'https://pakbizbranhces.online/',
     siteName: 'PakBizBranches',
     locale: 'en_PK',

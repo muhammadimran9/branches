@@ -45,6 +45,19 @@ export async function generateMetadata(props: { params: Promise<{ city: string; 
     ...getCityKeywordCluster(cityName),
   ]
 
+  let businessesCount = 0
+  try {
+    const categoryValues = getPossibleCategoryValues(params.categorySlug).slice(0, 10)
+    const q = query(
+      collection(db, 'businesses'),
+      where('city', '==', cityName),
+      where('category', 'in', categoryValues),
+      limit(1)
+    )
+    const snap = await getDocs(q)
+    businessesCount = snap.size
+  } catch {}
+
   return {
     title,
     description,
@@ -54,6 +67,10 @@ export async function generateMetadata(props: { params: Promise<{ city: string; 
       `${cityName} ${category.name.toLowerCase()} businesses`,
       ...keywordCluster.slice(0, 8),
     ],
+    robots: {
+      index: businessesCount > 0,
+      follow: true,
+    },
     alternates: { canonical: url },
     openGraph: {
       title,

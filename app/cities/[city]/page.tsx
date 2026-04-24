@@ -44,6 +44,17 @@ export async function generateMetadata(props: { params: Promise<{ city: string }
   const cityName = findCityBySlug(params.city)
   if (!cityName) return { title: 'City Not Found | PakBizBranches' }
 
+  let businessesCount = 0
+  try {
+    const q = query(
+      collection(db, 'businesses'),
+      where('city', '==', cityName),
+      limit(1)
+    )
+    const snap = await getDocs(q)
+    businessesCount = snap.size
+  } catch {}
+
   const title = `Best Businesses in ${cityName} | Local Business Directory`
   const description = `Discover top local businesses in ${cityName} with phone numbers, category filters, and verified contact details.`
   const url = `${BASE_URL}/cities/${params.city}`
@@ -58,6 +69,10 @@ export async function generateMetadata(props: { params: Promise<{ city: string }
       `best businesses in ${cityName}`,
       ...keywordCluster,
     ],
+    robots: {
+      index: businessesCount > 0,
+      follow: true,
+    },
     alternates: { canonical: url },
     openGraph: {
       title,

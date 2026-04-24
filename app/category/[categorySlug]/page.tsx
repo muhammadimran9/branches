@@ -39,6 +39,17 @@ export async function generateMetadata(props: { params: Promise<{ categorySlug: 
   const category = CATEGORIES.find(c => c.id === params.categorySlug)
   if (!category) return { title: 'Category Not Found | PakBizBranches' }
 
+  let businessesCount = 0
+  try {
+    const q = query(
+      collection(db, 'businesses'),
+      where('categoryId', '==', params.categorySlug),
+      limit(1)
+    )
+    const snap = await getDocs(q)
+    businessesCount = snap.size
+  } catch {}
+
   const title = `Best ${category.name} in Pakistan | Local Listings`
   const description = `Discover top ${category.name.toLowerCase()} in Pakistan with phone numbers, addresses, and verified local business listings.`
   const url = `${BASE_URL}/categories/${params.categorySlug}`
@@ -53,6 +64,10 @@ export async function generateMetadata(props: { params: Promise<{ categorySlug: 
       `best ${category.name.toLowerCase()} in Pakistan`,
       ...keywordCluster,
     ],
+    robots: {
+      index: businessesCount > 0,
+      follow: true,
+    },
     alternates: { canonical: url },
     openGraph: {
       title,

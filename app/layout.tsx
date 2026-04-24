@@ -3,12 +3,13 @@ import './globals.css'
 import AntiCopyWrapper from '@/components/anti-copy-wrapper'
 import FloatingWhatsAppButton from '@/components/floating-whatsapp-button'
 import ChatWidget from '@/components/chat/ChatWidget'
+
 export const metadata: Metadata = {
-  title: 'Pakistan Business Directory | Find Local Services Fast',
+  title: 'Pakistan Business Directory | Find Local Businesses & Services',
   description:
-    'Find top businesses in Pakistan by city and category. Get verified phone numbers, addresses, and service details. List your business for free.',
+    'The most trusted Pakistan business directory. Find verified local businesses, phone numbers, and addresses by city and category. List your business for free.',
   keywords:
-    'Pakistan business directory, find businesses near you Pakistan, best local services Pakistan, free business listing Pakistan, city business listings Pakistan',
+    'Pakistan business directory, free business listing Pakistan, Karachi business listings, Lahore business directory, Islamabad business listings, local services Pakistan',
   authors: [{ name: 'PakBizBranches', url: 'https://pakbizbranhces.online' }],
   metadataBase: new URL('https://pakbizbranhces.online'),
   icons: {
@@ -22,9 +23,9 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Pakistan Business Directory | Find Local Services Fast',
+    title: 'Pakistan Business Directory | Find Local Businesses & Services',
     description:
-      'Find top businesses in Pakistan by city and category. Compare listings and contact local services quickly.',
+      'Search verified Pakistan businesses by category and city. Compare listings and contact local services quickly on the #1 business directory.',
     url: 'https://pakbizbranhces.online',
     siteName: 'PakBizBranches',
     locale: 'en_PK',
@@ -32,9 +33,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Pakistan Business Directory | Find Local Services Fast',
+    title: 'Pakistan Business Directory | Find Local Businesses & Services',
     description:
-      'Find top businesses in Pakistan by city and category. List your business for free and get discovered.',
+      'List your business for free and get discovered by thousands of local customers across Pakistan.',
   },
   robots: {
     index: true,

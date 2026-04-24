@@ -35,31 +35,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
-  // Programmatic city pages
-  const cityPages: MetadataRoute.Sitemap = CITIES.map(city => ({
-    url: `${BASE_URL}/cities/${encodeURIComponent(city.toLowerCase().replace(/ /g, '-'))}`,
-    lastModified: now,
-    changeFrequency: 'daily' as const,
-    priority: 0.85,
-  }))
-
-  // Programmatic category pages
-  const categoryPages: MetadataRoute.Sitemap = CATEGORIES.map(cat => ({
-    url: `${BASE_URL}/categories/${cat.id}`,
-    lastModified: now,
-    changeFrequency: 'daily' as const,
-    priority: 0.85,
-  }))
-
-  // City + Category pages
-  const cityCategoryPages: MetadataRoute.Sitemap = CITIES.flatMap(city =>
-    CATEGORIES.map(cat => ({
-    url: `${BASE_URL}/locations/${encodeURIComponent(city.toLowerCase().replace(/ /g, '-'))}/${cat.id}`,
-      lastModified: now,
-      changeFrequency: 'daily' as const,
-      priority: 0.8,
-    }))
-  )
 
   // Blog post pages - Limited to 15 posts max (uncomment as needed daily)
   let blogPages: MetadataRoute.Sitemap = []
@@ -99,12 +74,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Dynamic business pages
   let businessPages: MetadataRoute.Sitemap = []
+  const activeCities = new Set<string>()
+  const activeCategories = new Set<string>()
+  const activeCityCategoryPairs = new Set<string>()
+
   try {
     const q = query(collection(db, 'businesses'), where('status', '==', 'approved'))
     const snap = await getDocs(q)
     businessPages = snap.docs
       .map(doc => {
         const data = doc.data()
+        const citySlug = data.city?.toLowerCase().replace(/ /g, '-')
+        const categorySlug = data.category
+        
+        if (citySlug) activeCities.add(citySlug)
+        if (categorySlug) activeCategories.add(categorySlug)
+        if (citySlug && categorySlug) activeCityCategoryPairs.add(`${citySlug}|${categorySlug}`)
+
         return {
           url: data.slug ? `${BASE_URL}/${data.slug}` : `${BASE_URL}/business/${doc.id}`,
           lastModified: data.updatedAt ? new Date(data.updatedAt.toDate?.() ?? data.updatedAt) : (data.createdAt ? new Date(data.createdAt.toDate?.() ?? data.createdAt) : now),
@@ -115,6 +101,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   } catch (error) {
     console.error('Error fetching businesses for sitemap:', error)
   }
+
+  // Filtered programmatic city pages
+  const cityPages: MetadataRoute.Sitemap = Array.from(activeCities).map(citySlug => ({
+    url: `${BASE_URL}/cities/${citySlug}`,
+    lastModified: now,
+    changeFrequency: 'daily' as const,
+    priority: 0.85,
+  }))
+
+  // Filtered programmatic category pages
+  const categoryPages: MetadataRoute.Sitemap = Array.from(activeCategories).map(catSlug => ({
+    url: `${BASE_URL}/categories/${catSlug}`,
+    lastModified: now,
+    changeFrequency: 'daily' as const,
+    priority: 0.85,
+  }))
+
+  // Filtered City + Category pages
+  const cityCategoryPages: MetadataRoute.Sitemap = Array.from(activeCityCategoryPairs).map(pair => {
+    const [citySlug, catSlug] = pair.split('|')
+    return {
+      url: `${BASE_URL}/locations/${citySlug}/${catSlug}`,
+      lastModified: now,
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
+    }
+  })
 
   return [
     ...staticPages,
