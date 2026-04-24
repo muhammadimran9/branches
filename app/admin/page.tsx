@@ -127,7 +127,19 @@ export default function AdminPage() {
     }
 
     try {
+      const business = businesses.find(b => b.id === businessId)
       await deleteDoc(doc(db, 'businesses', businessId))
+      
+      // IndexNow Notification
+      if (business) {
+        const pageUrl = `${window.location.origin}/${business.slug || business.id}`
+        fetch('/api/indexnow', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ urls: [pageUrl] })
+        }).catch(err => console.error('IndexNow submission failed:', err))
+      }
+
       setBusinesses(prev => prev.filter(b => b.id !== businessId))
       setDeleteConfirm(null)
       alert('Business deleted successfully')
@@ -151,6 +163,14 @@ export default function AdminPage() {
       const businessRef = doc(db, 'businesses', selectedBusiness.id)
       await updateDoc(businessRef, editForm)
       
+      // IndexNow Notification
+      const pageUrl = `${window.location.origin}/${selectedBusiness.slug || selectedBusiness.id}`
+      fetch('/api/indexnow', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ urls: [pageUrl] })
+      }).catch(err => console.error('IndexNow submission failed:', err))
+
       setBusinesses(prev => prev.map(b => 
         b.id === selectedBusiness.id ? { ...b, ...editForm } : b
       ))
@@ -167,8 +187,20 @@ export default function AdminPage() {
 
   async function handleSetActive(businessId: string) {
     try {
+      const business = businesses.find(b => b.id === businessId)
       const businessRef = doc(db, 'businesses', businessId)
       await updateDoc(businessRef, { status: 'approved' })
+      
+      // IndexNow Notification
+      if (business) {
+        const pageUrl = `${window.location.origin}/${business.slug || business.id}`
+        fetch('/api/indexnow', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ urls: [pageUrl] })
+        }).catch(err => console.error('IndexNow submission failed:', err))
+      }
+
       setBusinesses(prev => prev.map(b =>
         b.id === businessId ? { ...b, status: 'approved' } : b
       ))

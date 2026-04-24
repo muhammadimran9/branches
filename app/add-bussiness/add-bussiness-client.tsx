@@ -290,6 +290,14 @@ const businessData = {
         }).catch(err => console.error('[v0] Email dispatch failed:', err))
       }
 
+      // IndexNow Automatic Submission
+      const pageUrl = `${window.location.origin}/${businessData.slug}`;
+      fetch('/api/indexnow', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ urls: [pageUrl] })
+      }).catch(err => console.error('IndexNow submission failed:', err));
+
       setStatus('success')
       
       // Redirect to business page after short delay
