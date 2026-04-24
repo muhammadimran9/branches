@@ -77,7 +77,7 @@ export async function submitToIndexNow(urls: string[], retry = true): Promise<{ 
   if (failed.length > 0) {
     return { 
       success: false, 
-      message: `Failed to submit some chunks. ${failed.map(f => f.error).join(', ')}` 
+      message: `Failed to submit some chunks. ${failed.map((f: any) => f.error || f.message || 'Unknown error').join(', ')}` 
     };
   }
 
